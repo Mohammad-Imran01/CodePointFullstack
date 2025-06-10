@@ -1,0 +1,168 @@
+@import url("https://fonts.googleapis.com/css2?family=Playwrite+RO:wght@100..400&display=swap");
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+    text-wrap: inherit;
+  }
+
+  @media (max-width: 780px) {
+    html {
+      font-size: 13px;
+    }
+  }
+
+  /* @media (min-width: 780px) {
+    html {
+      font-size: 12px;
+    }
+  } */
+  /* 
+  .mainRoot {
+    font-family: "Inter", sans-serif;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: #000;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+    text-align: left;
+    text-decoration: none;
+    text-transform: none;
+    text-wrap: nowrap;
+  } */
+
+  .mainRoot {
+    @apply font-generalText flex-col justify-center items-center relative text-[16px] leading-[1.5] font-normal text-nowrap;
+  }
+
+  a {
+    @apply text-slate-900 dark:text-white duration-75 cursor-pointer ease-in-out;
+    /* &:hover {
+      @apply text-slate-300;
+    }
+    &:active {
+      @apply translate-y-[1px];
+    } */
+  }
+}
+
+@layer components {
+  .textTitle {
+    @apply font-specialTitle;
+  }
+  .pentagon {
+    clip-path: polygon(
+      50% 0%,     /* Top point */
+      100% 38%,   /* Right top */
+      82% 100%,   /* Right bottom */
+      18% 100%,   /* Left bottom */
+      0% 38%      /* Left top */
+    );
+  }
+  
+  .flexCenter {
+    @apply flex items-center justify-center;
+  }
+
+  .flexCenter-column {
+    @apply flex items-center justify-center flex-col;
+  }
+
+  .dark .dot-background {
+    background: linear-gradient(90deg, #0f172b calc(22px - 1px), transparent 1%)
+        center / 22px 22px,
+      linear-gradient(#0f172b calc(22px - 1px), transparent 1%) center / 22px
+        22px,
+      #63739d;
+  }
+
+  .dot-background {
+    background: linear-gradient(90deg, white calc(22px - 1px), transparent 1%)
+        center / 22px 22px,
+      linear-gradient(white calc(22px - 1px), transparent 1%) center / 22px 22px,
+      black;
+  }
+
+  /* .container {
+    @apply max-w-[1280px] w-full mx-auto px-4 md:px-6 lg:px-16;
+  } */
+
+  .btn-light {
+    @apply text-xl px-3 py-1 border-2 
+           border-slate-900 text-slate-900 
+           dark:border-white dark:text-white 
+           rounded-md 
+           bg-transparent 
+           transition duration-75 
+           hover:bg-slate-900 hover:text-white 
+           dark:hover:bg-white dark:hover:text-slate-900
+           active:translate-y-[1px] hover:shadow-md/30;
+  }
+
+  .btn-dark {
+    @apply text-xl px-3 py-1 border-2 
+           border-white text-white 
+           rounded-md 
+           bg-slate-900 
+           transition duration-75 
+           hover:bg-white hover:text-slate-900 
+           dark:hover:bg-slate-100 dark:hover:text-slate-900
+           active:translate-y-[1px] hover:shadow-md/30;
+  }
+
+  .animate-borderGradient {
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 8px;
+    border-image-slice: 1;
+    animation: borderGradient 5s linear infinite;
+  }
+  .blueBg {
+    @apply border-2 dark:border-slate-700 border-blue-100 rounded-lg bg-blue-50/60 shadow-2xl/10 text-black dark:bg-slate-800/40;
+  }
+  .grayBg {
+    @apply border-2 dark:border-gray-300 border-gray-100 rounded-lg dark:bg-gray-600/20 bg-gray-50/60 shadow-2xl/10 text-black;
+  }
+  .insideCard {
+    @apply mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20;
+  }
+
+  .sectionHeading {
+    @apply text-center mb-4 font-bold tracking-tight text-slate-900 dark:text-white text-3xl sm:text-5xl;
+  }
+
+  .infiniteScroll {
+    animation: scroll 15s linear infinite;
+  }
+}
+
+@theme {
+  --breakpoint-sm: 780px;
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1280px;
+  --breakpoint-xl: 1440px;
+  --font-specialTitle: "Playwrite RO", cursive;
+  --font-generalText: "Inter", sans-serif;
+
+  @keyframes scroll {
+    to {
+      transform: translateX(calc(-100% - 32px));
+    }
+  }
+}
