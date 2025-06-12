@@ -51,8 +51,7 @@ const Navbar = ({ userData, toggleLeftbar, showLeftbar }) => {
   useEffect(() => {
     dispatch(getModProfileAction());
   }, [dispatch]);
-  const moderator =
-    false & useSelector((state) => state.moderation?.modProfile);
+  const moderator = useSelector((state) => state.moderation?.modProfile);
 
   const handleProfileClick = () => {
     setShowDropdown(!showDropdown);

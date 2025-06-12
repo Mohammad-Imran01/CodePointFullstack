@@ -7,6 +7,9 @@ import moderationReducer from "./moderation";
 import userReducer from "./user";
 import adminReducer from "./admin";
 
+import coursesReducer from "./product";
+
+
 const rootReducer = combineReducers({
   posts: postsReducer,
   auth: authReducer,
@@ -14,6 +17,7 @@ const rootReducer = combineReducers({
   moderation: moderationReducer,
   user: userReducer,
   admin: adminReducer,
+  courses: coursesReducer, // ✅ Add this line
 });
 
 export default rootReducer;

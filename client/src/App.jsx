@@ -59,7 +59,7 @@ const App = () => {
         />
       </Routes>
 
-      <ThemeButton />
+      {/* <ThemeButton /> */}
     </Suspense>
   );
 };

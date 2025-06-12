@@ -128,7 +128,7 @@
   }
 
   .main-section {
-    @apply mx-2 mt-1 rounded-md md:col-span-2;
+    @apply rounded-md md:col-span-2;
   }
 
   .flexCenter {
@@ -170,11 +170,11 @@
   }
 
   .btn-light {
-    @apply text-xl px-3 py-1 border-2 border-slate-900 text-slate-900 rounded-md bg-transparent transition duration-75 hover:bg-slate-900 hover:text-white;
+    @apply text-lg px-3 py-[2px] border border-slate-900 text-slate-900 rounded-sm bg-transparent transition duration-75 hover:bg-slate-900 hover:text-white;
   }
 
   .btn-dark {
-    @apply text-xl px-3 py-1 border-2 border-white text-white rounded-md bg-slate-900 transition duration-75 hover:bg-white hover:text-slate-900;
+    @apply text-xl px-3 py-[2px] border border-white text-white rounded-sm bg-slate-900 transition duration-75 hover:bg-white hover:text-slate-900;
   }
 
   .sectionHeading {

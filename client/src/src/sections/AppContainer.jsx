@@ -7,33 +7,44 @@ import Instructors from "./Instructors";
 import Contact from "./Contact";
 import FAQs from "./FAQs";
 import Footer from "./Footer";
+import Navbar from "../../components/shared/Navbar";
 
 
 
 function App() {
+  // const Container = ({ children, className = "" }) => {
+  //   return (
+  //     <div
+  //       className={`w-full flexCenter max-sm:pt-3 px-2 md:px-3 lg:px-8 sm:pt-6 md:py-4 lg:pt-6 ${className}`}
+  //     >
+  //       <div className="w-full mx-auto max-w-7xl  sm:px-6 lg:px-8 flexCenter">
+  //         {children}
+  //       </div>
+  //     </div>
+  //   );
+  // };
   const Container = ({ children, className = "" }) => {
     return (
       <div
-        className={`w-full flexCenter max-sm:pt-3 px-2 md:px-3 lg:px-8 sm:pt-6 md:py-4 lg:pt-6 ${className}`}
+        className={`flexCenter w-full px-2 max-sm:pt-3 sm:pt-6 md:px-3 md:py-4 lg:px-8 lg:pt-6 ${className}`}
       >
-        <div className="w-full mx-auto max-w-7xl  sm:px-6 lg:px-8 flexCenter">
+        <div className="flexCenter mx-auto w-full  max-w-7xl sm:px-6 lg:px-8">
           {children}
         </div>
       </div>
     );
   };
-
   return (
     <>
       {/* nav */}
-      <Container className="fixed top-0 left-0 right-0 z-10 py-0!  h-16 bg-blue-50/95 dark:bg-slate-800/95 shadow-md/10">
+      {/* <Container className="fixed top-0 left-0 right-0 z-10 !py-0  h-16 bg-blue-50/95 dark:bg-slate-800/95 shadow-md/10"> */}
         {/* <div className="bbb"> */}
-        <Nav />
+        <Navbar />
         {/* </div> */}
-      </Container>
+      {/* </Container> */}
 
       {/* hero */}
-      <Container className="bg-blue-50 dark:bg-slate-800 py-32! md:p-44!">
+      <Container className="bg-blue-50 dark:bg-slate-800 !py-32 !md:p-44">
         {/* <div className="bbg"> */}
         <Hero />
         {/* </div> */}

@@ -14,6 +14,9 @@ const userRoutes = require("./routes/user.route");
 const postRoutes = require("./routes/post.route");
 const communityRoutes = require("./routes/community.route");
 const contextAuthRoutes = require("./routes/context-auth.route");
+
+const courseRoutes = require('./routes/course.route')
+
 const search = require("./controllers/search.controller");
 const Database = require("./config/database");
 const decodeToken = require("./middlewares/auth/decodeToken");
@@ -59,6 +62,8 @@ app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/communities", communityRoutes);
 app.use("/admin", adminRoutes);
+app.use("/products", courseRoutes);
+
 
 process.on("SIGINT", async () => {
   try {

@@ -21,7 +21,7 @@ const MemoizedPost = memo(Post);
 const Container = ({ children, className = "" }) => {
   return (
     <div
-      className={`flexCenter w-full px-2 max-sm:pt-3 sm:pt-6 md:px-3 md:py-4 lg:px-8 lg:pt-6 ${className}`}
+      className={`flexCenter w-full px-2 max-sm:pt-3 sm:pt-6 md:px-3 md:py-4 lg:px-8 lg:pt-6 ${className} border-0 odd:border-purple-400 even:border-yellow-500`}
     >
       <div className="flexCenter mx-auto w-full  max-w-7xl sm:px-6 lg:px-8">
         {children}
