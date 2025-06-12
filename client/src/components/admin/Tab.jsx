@@ -5,7 +5,8 @@ import { logoutAction } from "../../redux/actions/adminActions";
 import ButtonLoadingSpinner from "../loader/ButtonLoadingSpinner";
 import { BiLogOut } from "react-icons/bi";
 import { BsPeople, BsWindowStack } from "react-icons/bs";
-import { IoSettingsOutline } from "react-icons/io5";
+import { IoSettingsOutline, IoPrintOutline } from "react-icons/io5";
+// import { AiOutlineProduct } from "react-icons/io5";
 
 const Tab = ({ activeTab, handleTabClick }) => {
   const navigate = useNavigate();
@@ -21,14 +22,14 @@ const Tab = ({ activeTab, handleTabClick }) => {
   };
 
   return (
-    <div className="border-b border-gray-200 sticky top-0 left-0 z-30 bg-white rounded-md">
-      <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
+    <div className="sticky left-0 top-0 z-30 rounded-md border-b border-gray-200 bg-white">
+      <ul className="-mb-px flex flex-wrap text-center text-sm font-medium text-gray-500">
         <li className="mr-2 flex items-center">
           <span
-            className={`cursor-pointer inline-flex items-center px-2 py-2 border-b-2 rounded-t-lg ${
+            className={`inline-flex cursor-pointer items-center rounded-t-lg border-b-2 px-2 py-2 ${
               activeTab === "logs"
-                ? "border-blue-500 bg-primary rounded-md text-white"
-                : "border-transparent hover:text-gray-600 hover:border-gray-300"
+                ? "rounded-md border-blue-500 bg-primary text-white"
+                : "border-transparent hover:border-gray-300 hover:text-gray-600"
             }`}
             onClick={() => handleTabClick("logs")}
           >
@@ -38,10 +39,10 @@ const Tab = ({ activeTab, handleTabClick }) => {
         </li>
         <li className="mr-2 flex items-center">
           <span
-            className={`cursor-pointer inline-flex items-center px-2 py-2 border-b-2 rounded-t-lg ${
+            className={`inline-flex cursor-pointer items-center rounded-t-lg border-b-2 px-2 py-2 ${
               activeTab === "settings"
-                ? "border-blue-500 bg-primary rounded-md text-white"
-                : "border-transparent hover:text-gray-600 hover:border-gray-300"
+                ? "rounded-md border-blue-500 bg-primary text-white"
+                : "border-transparent hover:border-gray-300 hover:text-gray-600"
             }`}
             onClick={() => handleTabClick("settings")}
           >
@@ -51,10 +52,10 @@ const Tab = ({ activeTab, handleTabClick }) => {
         </li>
         <li className="mr-2 flex items-center">
           <span
-            className={`cursor-pointer inline-flex items-center px-2 py-2 border-b-2 rounded-t-lg ${
+            className={`inline-flex cursor-pointer items-center rounded-t-lg border-b-2 px-2 py-2 ${
               activeTab === "Community Management"
-                ? "border-blue-500 bg-primary rounded-md text-white"
-                : "border-transparent hover:text-gray-600 hover:border-gray-300"
+                ? "rounded-md border-blue-500 bg-primary text-white"
+                : "border-transparent hover:border-gray-300 hover:text-gray-600"
             }`}
             onClick={() => handleTabClick("Community Management")}
           >
@@ -64,10 +65,23 @@ const Tab = ({ activeTab, handleTabClick }) => {
         </li>
         <li className="mr-2 flex items-center">
           <span
-            className={`cursor-pointer inline-flex items-center px-2 py-2 border-b-2 rounded-t-md ${
+            className={`inline-flex cursor-pointer items-center rounded-t-lg border-b-2 px-2 py-2 ${
+              activeTab === "Products"
+                ? "rounded-md border-blue-500 bg-primary text-white"
+                : "border-transparent hover:border-gray-300 hover:text-gray-600"
+            }`}
+            onClick={() => handleTabClick("Products")}
+          >
+            <IoPrintOutline className="mr-1" />
+            Products
+          </span>
+        </li>
+        <li className="mr-2 flex items-center">
+          <span
+            className={`inline-flex cursor-pointer items-center rounded-t-md border-b-2 px-2 py-2 ${
               activeTab === "logout"
-                ? "border-blue-500 bg-primary rounded-md text-white"
-                : "border-transparent hover:text-red-600 hover:border-red-600"
+                ? "rounded-md border-blue-500 bg-primary text-white"
+                : "border-transparent hover:border-red-600 hover:text-red-600"
             }`}
             onClick={handleLogout}
           >

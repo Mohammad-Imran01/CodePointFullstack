@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Tab from "../components/admin/Tab";
 import Logs from "../components/admin/Logs";
 import Settings from "../components/admin/Settings";
+import ProductManager from "./../components/admin/ProductManager"
 import CommunityManagement from "../components/admin/CommunityManagement";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutAction } from "../redux/actions/adminActions";
@@ -31,6 +32,7 @@ const AdminPanel = () => {
       {activeTab === "logs" && <Logs />}
       {activeTab === "settings" && <Settings />}
       {activeTab === "Community Management" && <CommunityManagement />}
+      {activeTab === "Products" && <ProductManager/>}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import CourseCard from "../components/CourseCard";
 import { fetchCourses } from "../../redux/actions/product";
 import { useDispatch, useSelector } from "react-redux";
 
-const Courses = () => {
+const Courses = ({ hasAdminAccess }) => {
   let coursesStatic = [
     {
       title: "Full-Stack Bootcamp",
@@ -69,10 +69,14 @@ const Courses = () => {
   return (
     <section className="blueBg text-wrap w-full">
       <div className="insideCard">
-        <h2 className="sectionHeading">Our Courses</h2>
+        {!hasAdminAccess && <h2 className="sectionHeading">Our Courses</h2>}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {courses.map((course, index) => (
-            <CourseCard key={index} {...course} />
+            <CourseCard
+              key={index}
+              {...course}
+              hasAdminAccess={hasAdminAccess}
+            />
           ))}
         </div>
       </div>

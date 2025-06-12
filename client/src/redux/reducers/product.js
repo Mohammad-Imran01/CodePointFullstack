@@ -14,7 +14,6 @@ const initialState = {
 };
 
 const coursesReducer = (state = initialState, action) => {
-    // console.log('coursered', action.type)
     switch (action.type) {
         case FETCH_COURSES_REQUEST:
         case ADD_COURSE_REQUEST:
