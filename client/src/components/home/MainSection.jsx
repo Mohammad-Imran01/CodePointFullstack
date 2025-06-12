@@ -71,22 +71,22 @@ const MainSection = ({ userData }) => {
     return posts.map((post) => <MemoizedPost key={post._id} post={post} />);
   }, [posts]);
 
-  if (isLoading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <CommonLoading />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex h-screen items-center justify-center">
+  //       <CommonLoading />
+  //     </div>
+  //   );
+  // }
   return (
     <>
-      <div>{memoizedPosts}</div>
+      {/* <div>{memoizedPosts}</div>
       {posts.length > 0 && posts.length < totalPosts && (
         <LoadMoreButton
           onClick={handleLoadMore}
           isLoading={isLoadMoreLoading}
         />
-      )}
+      )} */}
       {/* {posts.length === 0 && (
         <div className="flex flex-col items-center justify-center text-center text-gray-700">
           <p className="py-5 font-semibold">
@@ -96,7 +96,7 @@ const MainSection = ({ userData }) => {
         </div>
       )} */}
 
-      <Container className="py-32! md:p-44! bg-blue-50 dark:bg-slate-800">
+      <Container className="!md:p-44 dark:bg-slate-800 bg-blue-50 !py-32">
         <Hero />
       </Container>
 
@@ -124,7 +124,7 @@ const MainSection = ({ userData }) => {
         <FAQs />
       </Container>
 
-      <Container className="mt-5 bg-blue-50 dark:bg-slate-800">
+      <Container className="dark:bg-slate-800 mt-5 bg-blue-50">
         <Footer />
       </Container>
     </>

@@ -81,21 +81,21 @@ const Search = () => {
   };
 
   return (
-    <div>
-      <div className="relative">
+    <div className="grow shrink max-w-lg">
+      <div className="relative flex items-center justify-center">
         <input
           type="text"
           id="search"
           value={inputValue}
           onChange={handleInputChange}
           placeholder="Search for people, posts or communities"
-          className="h-10 py-1 bg-white border w-full md:w-[660px] rounded-full text-sm shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-500 transition duration-300 pl-3 pr-10"
+          className="focus:shadow-outline-blue h-10 w-full rounded-full border bg-white py-1 pl-3 pr-10 text-sm shadow-sm transition duration-300 focus:border-blue-500 focus:outline-none "
           aria-label="Search"
           autoComplete="off"
         />
         {inputValue !== "" && (
           <button
-            className="absolute top-0 right-0 h-full w-10 flex items-center justify-center text-gray-400 hover:text-gray-600"
+            className="absolute right-0 top-0 flex h-full w-10 items-center justify-center text-gray-400 hover:text-gray-600"
             onClick={clearValues}
           >
             <MdClear />
@@ -106,10 +106,10 @@ const Search = () => {
       {inputValue !== "" && (
         <div
           onBlur={() => !community && clearValues()}
-          className="absolute start-0 md:start-auto w-screen top-12 md:w-[660px] bg-white border rounded-md shadow-md"
+          className="absolute start-0 top-12 w-screen rounded-md border bg-white shadow-md md:start-auto md:w-[660px]"
         >
           {loading && (
-            <div className="flex items-center justify-center py-2 px-2">
+            <div className="flex items-center justify-center px-2 py-2">
               <MoonLoader size={20} color={"#008cff"} />
               <span className="ml-2">Searching...</span>
             </div>
@@ -117,13 +117,13 @@ const Search = () => {
           {posts.length > 0 && (
             <ul className="z-30">
               {posts.map((post) => (
-                <li key={post._id} className="border-b py-2 px-4">
+                <li key={post._id} className="border-b px-4 py-2">
                   <div
                     onClick={() => {
                       navigate(`/post/${post._id}`);
                       clearValues();
                     }}
-                    className="block text-sm text-gray-700 hover:text-blue-500 cursor-pointer"
+                    className="block cursor-pointer text-sm text-gray-700 hover:text-blue-500"
                   >
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
@@ -154,13 +154,13 @@ const Search = () => {
           {users.length > 0 && (
             <ul className="z-30">
               {users.map((user) => (
-                <li key={user._id} className="border-b py-2 px-4">
+                <li key={user._id} className="border-b px-4 py-2">
                   <div
                     onClick={() => {
                       navigate(`/user/${user._id}`);
                       clearValues();
                     }}
-                    className="block text-sm text-gray-700 hover:text-indigo-500 cursor-pointer"
+                    className="block cursor-pointer text-sm text-gray-700 hover:text-indigo-500"
                   >
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
@@ -185,7 +185,7 @@ const Search = () => {
             </ul>
           )}
           {community && (
-            <div className="border-b py-2 px-4">
+            <div className="border-b px-4 py-2">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
                   <img
@@ -194,11 +194,11 @@ const Search = () => {
                     className="h-8 w-8 rounded-full"
                   />
                 </div>
-                <div className=" px-2 flex justify-between items-center gap-2">
+                <div className=" flex items-center justify-between gap-2 px-2">
                   <div className="">
                     <p className="font-medium">{community.name}</p>
 
-                    <p className="text-sm line-clamp-2">
+                    <p className="line-clamp-2 text-sm">
                       {community.description}
                     </p>
                   </div>
@@ -214,7 +214,7 @@ const Search = () => {
                         community={community}
                       />
                       <button
-                        className="bg-primary px-2 py-1 text-white text-sm rounded-md"
+                        className="rounded-md bg-primary px-2 py-1 text-sm text-white"
                         onClick={() => toggleModal(true)}
                       >
                         Join
@@ -233,7 +233,7 @@ const Search = () => {
                 navigate(`/community/${joinedCommunity.name}`);
                 clearValues();
               }}
-              className="block text-sm text-gray-700 hover:text-indigo-500 border-b py-2 px-4 cursor-pointer"
+              className="block cursor-pointer border-b px-4 py-2 text-sm text-gray-700 hover:text-indigo-500"
             >
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -244,10 +244,10 @@ const Search = () => {
                   />
                 </div>
                 <div className="ml-3">
-                  <p className="font-semibold text-md text-primary">
+                  <p className="text-md font-semibold text-primary">
                     {joinedCommunity.name}
                   </p>
-                  <p className="text-sm text-gray-600 line-clamp-2">
+                  <p className="line-clamp-2 text-sm text-gray-600">
                     {joinedCommunity.description}
                   </p>
                 </div>

@@ -79,21 +79,24 @@ const Navbar = ({ userData, toggleLeftbar, showLeftbar }) => {
   }, []);
 
   return (
-    <nav className="sticky top-0 z-20 mb-5 flex justify-center gap-10 border border-black bg-white p-2 md:items-center md:justify-between md:px-36">
-      <Link to="/" className=" md:inline-block">
-        {/* <img className="w-36" src={Logo} alt="" /> */}
-        <h1 className="textTitle ">Code Point</h1>
-      </Link>
+    <nav className="flexCenter sticky top-0 z-20 gap-10 bg-white p-2 py-3">
+      <div className="flex max-w-screen-xl items-center justify-between gap-5 max-md:w-[93%] md:w-[96%]">
+        <Link to="/" className=" md:inline-block">
+          {/* <img className="w-36" src={Logo} alt="" /> */}
+          <h1 className="textTitle">Code Point</h1>
+        </Link>
 
-      {/* <button className="inline-block md:hidden" onClick={toggleLeftbar}>
+        {/* <button className="inline-block md:hidden" onClick={toggleLeftbar}>
         {showLeftbar ? <RxCross1 /> : <AiOutlineBars />}
       </button> */}
 
-      <Search />
+        <div className="flex shrink grow items-center justify-center">
+          <Search />
+        </div>
 
-      <div className="relative flex items-center justify-end   md:w-36">
-        {/* <div className="border-stone-30 flex items-center justify-around gap-0 rounded-full border-2 px-2 py-1"> */}
-        {/* <button
+        <div className="relative flex items-center justify-end">
+          {/* <div className="border-stone-30 flex items-center justify-around gap-0 rounded-full border-2 px-2 py-1"> */}
+          {/* <button
             type="button"
             className="inline-flex cursor-pointer items-center justify-center"
             onClick={handleProfileClick}
@@ -106,7 +109,7 @@ const Navbar = ({ userData, toggleLeftbar, showLeftbar }) => {
               />
             </div>
           </button> */}
-        {/* <Transition
+          {/* <Transition
           show={showDropdown}
           enter="transition ease-out duration-100 transform"
           enterFrom="opacity-0 scale-95"
@@ -160,105 +163,112 @@ const Navbar = ({ userData, toggleLeftbar, showLeftbar }) => {
           )}
         </Transition> */}
 
-        {/* <div className="w-3"></div> */}
-        <button
-          className="flex shrink-0 items-center justify-center rounded-full bg-stone-200 p-2"
-          onClick={() => setShowRightBar((curr) => !curr)}
-        >
-          {showRightBar ? <RxCross1 /> : <AiOutlineBars />}
-        </button>
-        <Transition
-          show={showRightBar}
-          enter="transition ease-out duration-100 transform"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="transition ease-in duration-75 transform"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
-        >
-          {() => (
-            <div
-              ref={dropdownRef}
-              className="absolute right-0 top-7 w-72 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="user-menu"
-            >
+          {/* <div className="w-3"></div> */}
+          <button
+            className="flex shrink-0 items-center justify-center rounded-full bg-stone-200 p-2"
+            onClick={() => setShowRightBar((curr) => !curr)}
+          >
+            {showRightBar ? <RxCross1 /> : <AiOutlineBars />}
+          </button>
+          <Transition
+            show={showRightBar}
+            enter="transition ease-out duration-100 transform"
+            enterFrom="opacity-0 scale-95"
+            enterTo="opacity-100 scale-100"
+            leave="transition ease-in duration-75 transform"
+            leaveFrom="opacity-100 scale-100"
+            leaveTo="opacity-0 scale-95"
+          >
+            {() => (
               <div
-                className={
-                  `rounded-md border bg-white/80 p-5`
-                  // ${ moderator ? "h-[85vh]" : "h-24" }`
-                }
+                ref={dropdownRef}
+                className="absolute right-0 top-7 w-72 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="user-menu"
               >
-                {
-                  // moderator ?
-                  <div className="flex flex-col gap-4">
-                    <div className="flex flex-col items-center gap-2 text-center">
-                      <img
-                        src={moderator.avatar}
-                        alt="user"
-                        className="h-20 w-20 rounded-full object-cover"
-                      />
+                <div
+                  className={
+                    `rounded-md border bg-white/80 p-5`
+                    // ${ moderator ? "h-[85vh]" : "h-24" }`
+                  }
+                >
+                  {
+                    // moderator ?
+                    <div className="flex flex-col gap-4">
+                      <div className="flex flex-col items-center gap-2 text-center">
+                        <img
+                          src={moderator.avatar}
+                          alt="user"
+                          className="h-20 w-20 rounded-full object-cover"
+                        />
 
-                      <Link to={`/profile`}>
-                        <p className="font-bold">
-                          {userData.name || moderator.name}
+                        <Link to={`/profile`}>
+                          <p className="font-bold">
+                            {userData?.name || moderator?.name}
+                          </p>
+                        </Link>
+
+                        <p className="text-sm text-gray-600">
+                          {moderator.email}
                         </p>
-                      </Link>
+                        <p className="text-xs text-gray-500">
+                          Joined: {moderator.createdAt}
+                        </p>
+                      </div>
 
-                      <p className="text-sm text-gray-600">{moderator.email}</p>
-                      <p className="text-xs text-gray-500">
-                        Joined: {moderator.createdAt}
-                      </p>
+                      <NavLink
+                        to="/home"
+                        icon={<HiOutlineHome />}
+                        label="Home"
+                      />
+                      <NavLink
+                        to="/profile"
+                        icon={<HiOutlineUserCircle />}
+                        label="Profile"
+                      />
+                      <NavLink
+                        to="/saved"
+                        icon={<HiOutlineTag />}
+                        label="Saved"
+                      />
+                      <div className="flex justify-center">
+                        <button
+                          type="button"
+                          className="block w-full px-4 py-2  text-left text-sm text-red-400 hover:cursor-pointer hover:text-red-600"
+                          role="menuitem"
+                          onClick={logout}
+                          disabled={loggingOut}
+                        >
+                          {loggingOut ? (
+                            <div className="text-center">Logging out...</div>
+                          ) : (
+                            <div className="flex items-center justify-center">
+                              <span>Logout</span>
+                              <IoLogOutOutline className="ml-2" />
+                            </div>
+                          )}
+                        </button>
+                      </div>
                     </div>
-
-                    <NavLink to="/home" icon={<HiOutlineHome />} label="Home" />
-                    <NavLink
-                      to="/profile"
-                      icon={<HiOutlineUserCircle />}
-                      label="Profile"
-                    />
-                    <NavLink
-                      to="/saved"
-                      icon={<HiOutlineTag />}
-                      label="Saved"
-                    />
-                    <div className="flex justify-center">
-                      <button
-                        type="button"
-                        className="block w-full px-4 py-2  text-left text-sm text-red-400 hover:cursor-pointer hover:text-red-600"
-                        role="menuitem"
-                        onClick={logout}
-                        disabled={loggingOut}
-                      >
-                        {loggingOut ? (
-                          <div className="text-center">Logging out...</div>
-                        ) : (
-                          <div className="flex items-center justify-center">
-                            <span>Logout</span>
-                            <IoLogOutOutline className="ml-2" />
-                          </div>
-                        )}
-                      </button>
-                    </div>
-                  </div>
-                  // : (
-                  //   <div className="flex flex-col gap-3">
-                  //     <NavLink to="/login" icon={<FaSignInAlt />} label="Login" />
-                  //     <NavLink
-                  //       to="/signup"
-                  //       icon={<FaUserPlus />}
-                  //       label="Sign Up"
-                  //     />
-                  //   </div>
-                  // )
-                }
+                    // : (
+                    //   <div className="flex flex-col gap-3">
+                    //     <NavLink to="/login" icon={<FaSignInAlt />} label="Login" />
+                    //     <NavLink
+                    //       to="/signup"
+                    //       icon={<FaUserPlus />}
+                    //       label="Sign Up"
+                    //     />
+                    //   </div>
+                    // )
+                  }
+                </div>
               </div>
-            </div>
-          )}
-        </Transition>
+            )}
+          </Transition>
+        </div>
+        {/* </div> */}
       </div>
-      {/* </div> */}
     </nav>
   );
 };

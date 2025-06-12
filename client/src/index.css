@@ -1,60 +1,71 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playwrite+RO:wght@100..400&display=swap");
 
+
+/* @custom-variant dark (&:where(.dark, .dark *)); */
 /* Tailwind layer injection */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom CSS variables (themes) */
-:root {
-  --shadow-3xl: -1px 34px 47px -29px rgb(32 32 32 / 100%);
-  --shadow-4xl: 0vw 0vw 0.5vw 0vw rgb(32 32 32 / 20%);
-  --shadow-5xl: 0vw 0.5vw 0.5vw 0vw rgb(32 32 32 / 16%);
-  --shadow-glass: 1px 5px 12px 1px rgba(31, 38, 135, 0.37);
-  --shadow-glass-card: 4px 4px 4px 4px rgba(32, 32, 32, 0.37);
-  --shadow-card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  --shadow-dark-shadow: 10px 10px 5px 0px rgba(130, 130, 130, 0.75);
+@layer base {
 
-  --color-background-200: #272727;
-  --color-background-300: #2e2e2e;
-  --color-background: #f6f7fa;
+  /* Custom CSS variables (themes) */
+  :root {
+    --shadow-3xl: -1px 34px 47px -29px rgb(32 32 32 / 100%);
+    --shadow-4xl: 0vw 0vw 0.5vw 0vw rgb(32 32 32 / 20%);
+    --shadow-5xl: 0vw 0.5vw 0.5vw 0vw rgb(32 32 32 / 16%);
+    --shadow-glass: 1px 5px 12px 1px rgba(31, 38, 135, 0.37);
+    --shadow-glass-card: 4px 4px 4px 4px rgba(32, 32, 32, 0.37);
+    --shadow-card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --shadow-dark-shadow: 10px 10px 5px 0px rgba(130, 130, 130, 0.75);
 
-  --color-primary-50: #63ceff;
-  --color-primary-100: #23b7fc;
-  --color-primary-200: #00bfff;
-  --color-primary-300: #00aeff;
-  --color-primary-400: #0099ff;
-  --color-primary-500: #008cff;
-  --color-primary-600: #0067ff;
-  --color-primary-700: #0040ff;
-  --color-primary-800: #0e4bff;
-  --color-primary-900: #0000ff;
-  --color-primary: #008cff;
-}
+    --color-background-200: #272727;
+    --color-background-300: #2e2e2e;
+    --color-background: #f6f7fa;
 
-/* Default font */
-* {
-  font-family: "Inter", sans-serif;
-}
+    --font-specialTitle: "Playwrite RO", cursive;
+    --font-generalText: "Inter", sans-serif;
 
-/* Scrollbar styling */
-*::-webkit-scrollbar {
-  width: 10px;
-}
+    --color-primary-50: #63ceff;
+    --color-primary-100: #23b7fc;
+    --color-primary-200: #00bfff;
+    --color-primary-300: #00aeff;
+    --color-primary-400: #0099ff;
+    --color-primary-500: #008cff;
+    --color-primary-600: #0067ff;
+    --color-primary-700: #0040ff;
+    --color-primary-800: #0e4bff;
+    --color-primary-900: #0000ff;
+    --color-primary: #008cff;
+  }
 
-*::-webkit-scrollbar-track {
-  border-radius: 5px;
-}
+  /* Default font */
+  * {
+    font-family: "Inter", sans-serif;
+  }
 
-::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(to bottom, #0070ff, #00d2ff, #0070ff);
-  border-radius: 10px;
-  border: 2px solid #ffff;
-}
+  /* Scrollbar styling */
+  *::-webkit-scrollbar {
+    width: 10px;
+  }
 
-/* Body background */
-body {
-  background-color: #f7fafc;
+  *::-webkit-scrollbar-track {
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(to bottom, #0070ff, #00d2ff, #0070ff);
+    border-radius: 10px;
+    border: 2px solid #ffff;
+  }
+
+  /* Body background */
+  body {
+    background-color: #f7fafc;
+  }
+
 }
 
 /* Tooltip styles */
@@ -110,30 +121,81 @@ body {
   height: calc(100vh - 5rem);
 }
 
-.main-section {
-  @apply mx-2 mt-1 rounded-md md:col-span-2;
-}
+@layer utilities {
+  .textTitle {
+    font-family: var(--font-specialTitle);
+    @apply text-2xl font-medium whitespace-nowrap;
+  }
 
-.leftbar {
-  @apply fixed top-20 h-[85vh] w-2/3 rounded-md border bg-white/80 pt-5 md:sticky md:col-span-1 md:block md:w-full;
-}
+  .main-section {
+    @apply mx-2 mt-1 rounded-md md:col-span-2;
+  }
 
-.rightbar {
-  @apply sticky top-20 hidden h-[85vh] rounded-md border bg-white/80 p-5 md:col-span-1 md:block;
-}
+  .flexCenter {
+    @apply flex items-center justify-center;
+  }
 
-#root,
-.dark .dot-background {
-  background: linear-gradient(90deg, #0f172b calc(22px - 1px), transparent 1%) center / 22px 22px,
-    linear-gradient(#0f172b calc(22px - 1px), transparent 1%) center / 22px 22px,
-    #63739d;
-}
+  .flexCenter-column {
+    @apply flex items-center justify-center flex-col;
+  }
 
-#root,
-.dot-background {
-  background: linear-gradient(90deg, white calc(22px - 1px), transparent 1%) center / 22px 22px,
-    linear-gradient(white calc(22px - 1px), transparent 1%) center / 22px 22px,
-    black;
+  .animate-borderGradient {
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 8px;
+    border-image-slice: 1;
+    animation: borderGradient 5s linear infinite;
+  }
+
+  .leftbar {
+    @apply fixed top-20 h-[85vh] w-2/3 rounded-md border bg-white/80 pt-5 md:sticky md:col-span-1 md:block md:w-full;
+  }
+
+  .rightbar {
+    @apply sticky top-20 hidden h-[85vh] rounded-md border bg-white/80 p-5 md:col-span-1 md:block;
+  }
+
+  #root,
+  .dark .dot-background {
+    background: linear-gradient(90deg, #0f172b calc(22px - 1px), transparent 1%) center / 22px 22px,
+      linear-gradient(#0f172b calc(22px - 1px), transparent 1%) center / 22px 22px,
+      #63739d;
+  }
+
+  #root,
+  .dot-background {
+    background: linear-gradient(90deg, white calc(22px - 1px), transparent 1%) center / 22px 22px,
+      linear-gradient(white calc(22px - 1px), transparent 1%) center / 22px 22px,
+      black;
+  }
+
+  .btn-light {
+    @apply text-xl px-3 py-1 border-2 border-slate-900 text-slate-900 rounded-md bg-transparent transition duration-75 hover:bg-slate-900 hover:text-white;
+  }
+
+  .btn-dark {
+    @apply text-xl px-3 py-1 border-2 border-white text-white rounded-md bg-slate-900 transition duration-75 hover:bg-white hover:text-slate-900;
+  }
+
+  .sectionHeading {
+    @apply text-center mb-4 font-bold tracking-tight text-slate-900 text-3xl sm:text-5xl;
+  }
+
+  .blueBg {
+    @apply border-2 border-blue-100 rounded-lg bg-blue-50/60 text-black;
+  }
+
+  .grayBg {
+    @apply border-2 border-gray-100 rounded-lg bg-gray-50/60 text-black;
+  }
+
+  .insideCard {
+    @apply mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20;
+  }
+
+  .infiniteScroll {
+    animation: scroll 15s linear infinite;
+  }
 }
 
 /* Loader animations */
@@ -165,25 +227,6 @@ body {
   transform-origin: center center;
 }
 
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes rotationBack {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(-360deg);
-  }
-}
 
 /* Admin loader */
 .admin-loader {
@@ -211,254 +254,49 @@ body {
   animation-delay: 1s;
 }
 
-@keyframes push {
-  0% {
-    transform: translate(-50%, 100%) scale(1);
-  }
-
-  15%,
-  25% {
-    transform: translate(-50%, 50%) scale(1);
-  }
-
-  50%,
-  75% {
-    transform: translate(-50%, -30%) scale(0.5);
-  }
-
-  80%,
-  100% {
-    transform: translate(-50%, -50%) scale(0);
-  }
-}
-
-/* @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap')
-layer(base);
-
-@import 'tailwindcss';
-
-@theme {
-  --shadow-3xl: -1px 34px 47px -29px rgb(32 32 32 / 100%);
-  --shadow-4xl: 0vw 0vw 0.5vw 0vw rgb(32 32 32 / 20%);
-  --shadow-5xl: 0vw 0.5vw 0.5vw 0vw rgb(32 32 32 / 16%);
-  --shadow-glass: 1px 5px 12px 1px rgba(31, 38, 135, 0.37);
-  --shadow-glass-card: 4px 4px 4px 4px rgba(32, 32, 32, 0.37);
-  --shadow-card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  --shadow-dark-shadow: 10px 10px 5px 0px rgba(130, 130, 130, 0.75);
-
-  --color-background-200: #272727;
-  --color-background-300: #2e2e2e;
-  --color-background: #f6f7fa;
-
-  --color-primary-50: #63ceff;
-  --color-primary-100: #23b7fc;
-  --color-primary-200: #00bfff;
-  --color-primary-300: #00aeff;
-  --color-primary-400: #0099ff;
-  --color-primary-500: #008cff;
-  --color-primary-600: #0067ff;
-  --color-primary-700: #0040ff;
-  --color-primary-800: #0e4bff;
-  --color-primary-900: #0000ff;
-  --color-primary: #008cff;
-}
-
-@utility container {
-  padding-inline: 1rem;
-  @media (width >= theme(--breakpoint-sm)) {
-    padding-inline: 2rem;
-  }
-  @media (width >= theme(--breakpoint-lg)) {
-    padding-inline: 4rem;
-  }
-  @media (width >= theme(--breakpoint-xl)) {
-    padding-inline: 5rem;
-  }
-  @media (width >= theme(--breakpoint-2xl)) {
-    padding-inline: 4rem;
-  }
-} */
-
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-/* @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
-}
-
-* {
-  font-family: "Inter", sans-serif;
-}
-*::-webkit-scrollbar {
-  width: 10px;
-}
-
-*::-webkit-scrollbar-track {
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(to bottom, #0070ff, #00d2ff, #0070ff);
-  border-radius: 10px;
-  border: 2px solid #ffff;
-}
-
-body {
-  background-color: #f7fafc;
-}
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  max-width: max-content;
-  height: auto;
-  background-color: #008cff;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
-
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent;
-  border-top-color: #008cff;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.tooltip:hover .tooltiptext::after {
-  opacity: 1;
-}
-
-.h-screen-20 {
-  height: calc(100vh - 5rem);
-}
-
-.main-section {
-  @apply mx-2 md:col-span-2 rounded-md mt-1;
-}
-
-.leftbar {
-  @apply w-2/3 md:block md:w-full md:col-span-1 bg-white fixed md:sticky top-20 pt-5 h-[85vh] rounded-md border;
-}
-
-.rightbar {
-  @apply hidden md:block md:col-span-1 bg-white sticky top-20 h-[85vh] p-5 rounded-md border;
-}
-.loader {
-  width: 20px;
-  height: 20px;
-  border: 3px dotted #0ac9ff;
-  border-radius: 50%;
-  display: inline-block;
-  position: relative;
-  box-sizing: border-box;
-  animation: rotation 2s linear infinite;
-}
-.loader::after {
-  content: "";
-  box-sizing: border-box;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  border: 3px dotted #197fc7;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  animation: rotationBack 1s linear infinite;
-  transform-origin: center center;
-}
-
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
+
 @keyframes rotationBack {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(-360deg);
   }
 }
-.admin-loader {
-  width: 84px;
-  height: 84px;
-  position: relative;
-  overflow: hidden;
-}
-.admin-loader:before,
-.admin-loader:after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: #0ac9ff;
-  transform: translate(-50%, 100%) scale(0);
-  animation: push 2s infinite ease-in;
-}
-.admin-loader:after {
-  animation-delay: 1s;
-}
+
 @keyframes push {
   0% {
     transform: translate(-50%, 100%) scale(1);
   }
+
   15%,
   25% {
     transform: translate(-50%, 50%) scale(1);
   }
+
   50%,
   75% {
     transform: translate(-50%, -30%) scale(0.5);
   }
+
   80%,
   100% {
     transform: translate(-50%, -50%) scale(0);
   }
-} */
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX(calc(-100% - 32px));
+  }
+}

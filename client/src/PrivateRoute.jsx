@@ -3,10 +3,10 @@ import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setInitialAuthState } from "./redux/actions/authActions";
 import Navbar from "./components/shared/Navbar";
-import Leftbar from "./components/shared/Leftbar";
-import Rightbar from "./components/shared/Rightbar";
+// import Leftbar from "./components/shared/Leftbar";
+// import Rightbar from "./components/shared/Rightbar";
 
-import ModeratorRightbar from "./components/moderator/Rightbar";
+// import ModeratorRightbar from "./components/moderator/Rightbar";
 
 const noRightbarRoutes = [
   /\/post\/[^/]+$/,
@@ -23,13 +23,13 @@ const PrivateRoute = ({ userData }) => {
     };
   }, []);
 
-  const location = useLocation();
+  // const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = localStorage.getItem("profile");
   const accessToken = JSON.parse(token)?.accessToken;
 
-  const currentUserIsModerator = userData?.role === "moderator";
+  // const currentUserIsModerator = userData?.role === "moderator";
 
   useEffect(() => {
     if (!isAuthenticated(userData, accessToken)) {
@@ -37,25 +37,26 @@ const PrivateRoute = ({ userData }) => {
     }
   }, [dispatch, navigate, userData, accessToken, isAuthenticated]);
 
-  const showRightbar = !noRightbarRoutes.some((regex) =>
-    regex.test(location.pathname)
-  );
+  // const showRightbar = !noRightbarRoutes.some((regex) =>
+  //   regex.test(location.pathname)
+  // );
 
   const [showLeftbar, setShowLeftbar] = useState(false);
 
-  const toggleLeftbar = () => {
-    setShowLeftbar(!showLeftbar);
-  };
+  // const toggleLeftbar = () => {
+  //   setShowLeftbar(!showLeftbar);
+  // };
 
   return isAuthenticated(userData, accessToken) ? (
     <div className="scroll-smooth">
       <Navbar
         userData={userData}
-        toggleLeftbar={toggleLeftbar}
-        showLeftbar={showLeftbar}
+        // toggleLeftbar={toggleLeftbar}
+        // showLeftbar={showLeftbar}
       />
 
-      <div className="md:mx-auto md:grid md:w-10/12 md:grid-cols-1 md:gap-6">
+      {/* <div className="md:mx-auto md:grid md:w-10/12 md:grid-cols-1 md:gap-6"> */}
+      <div className="m-0 rounded-none p-0">
         {/* <Leftbar showLeftbar={showLeftbar} /> */}
 
         <Outlet />

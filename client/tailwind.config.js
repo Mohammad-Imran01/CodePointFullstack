@@ -48,6 +48,9 @@ module.exports = {
         },
       },
     },
+    fontFamily: {
+      'cursive': ['Playwrite RO', 'cursive']
+    }
   },
 
   plugins: [],
