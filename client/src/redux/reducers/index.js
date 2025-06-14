@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   moderation: moderationReducer,
   user: userReducer,
   admin: adminReducer,
-  courses: coursesReducer, // ✅ Add this line
+  courses: coursesReducer,
 });
 
 export default rootReducer;

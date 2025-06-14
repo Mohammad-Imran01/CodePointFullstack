@@ -5,8 +5,10 @@ const Profile = () => {
   const userData = useSelector((state) => state.auth?.userData);
 
   return (
-    <div className="main-section">
-      <UserProfile userData={userData} />
+    <div className="main-section ">
+      <div className="mx-auto max-w-6xl">
+        <UserProfile userData={userData} />
+      </div>
     </div>
   );
 };

@@ -13,6 +13,13 @@ const {
   getModerators,
 } = require("../controllers/admin.controller");
 
+const {
+  addCourse,
+  updateCourse,
+  deleteCourse,
+} = require("../controllers/course.controller");
+
+
 const requireAdminAuth = require("../middlewares/auth/adminAuth");
 const {
   configLimiter,
@@ -39,5 +46,11 @@ router
   .route("/logs")
   .get(logLimiter, retrieveLogInfo)
   .delete(logLimiter, deleteLogInfo);
+
+// Admin-only Course Routes (Already behind requireAdminAuth)
+router.post("/products/course", configLimiter, addCourse);
+router.put("/products/course/:id", configLimiter, updateCourse);
+router.delete("/products/course/:id", configLimiter, deleteCourse);
+
 
 module.exports = router;

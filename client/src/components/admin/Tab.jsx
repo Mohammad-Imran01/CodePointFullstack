@@ -6,100 +6,67 @@ import ButtonLoadingSpinner from "../loader/ButtonLoadingSpinner";
 import { BiLogOut } from "react-icons/bi";
 import { BsPeople, BsWindowStack } from "react-icons/bs";
 import { IoSettingsOutline, IoPrintOutline } from "react-icons/io5";
-// import { AiOutlineProduct } from "react-icons/io5";
 
-const Tab = ({ activeTab, handleTabClick }) => {
+
+
+const Tab = ({ tabItems, activeTab, handleTabClick }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loggingOut, setLoggingOut] = useState(false);
 
   const handleLogout = async () => {
     setLoggingOut(true);
-    await dispatch(logoutAction()).then(() => {
+    try {
+      await dispatch(logoutAction());
       navigate("/admin/signin");
-    });
-    setLoggingOut(false);
+    } finally {
+      setLoggingOut(false);
+    }
   };
 
   return (
-    <div className="sticky left-0 top-0 z-30 rounded-md border-b border-gray-200 bg-white">
-      <ul className="-mb-px flex flex-wrap text-center text-sm font-medium text-gray-500">
+    <div className="sticky left-0 top-0 z-30 ">
+      <ul
+        className="-mb-px flex flex-wrap text-center text-sm font-medium text-gray-500"
+        role="tablist"
+      >
+        {tabItems.map(({ key, label, icon: Icon }) => (
+          <li key={key} className="mr-2 flex items-center">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === key}
+              tabIndex={activeTab === key ? 0 : -1}
+              className={`inline-flex cursor-pointer items-center rounded-t-lg border-b-2 px-2 py-2 text-stone-900  transition-colors duration-150 ${
+                activeTab === key
+                  ? "border-stone-900 font-bold"
+                  : "border-transparent hover:font-bold hover:text-stone-800"
+              }`}
+              onClick={() => handleTabClick(key)}
+            >
+              <Icon className="mr-1" />
+              {label}
+            </button>
+          </li>
+        ))}
+
         <li className="mr-2 flex items-center">
-          <span
-            className={`inline-flex cursor-pointer items-center rounded-t-lg border-b-2 px-2 py-2 ${
-              activeTab === "logs"
-                ? "rounded-md border-blue-500 bg-primary text-white"
-                : "border-transparent hover:border-gray-300 hover:text-gray-600"
-            }`}
-            onClick={() => handleTabClick("logs")}
-          >
-            <BsWindowStack className="mr-1" />
-            Logs
-          </span>
-        </li>
-        <li className="mr-2 flex items-center">
-          <span
-            className={`inline-flex cursor-pointer items-center rounded-t-lg border-b-2 px-2 py-2 ${
-              activeTab === "settings"
-                ? "rounded-md border-blue-500 bg-primary text-white"
-                : "border-transparent hover:border-gray-300 hover:text-gray-600"
-            }`}
-            onClick={() => handleTabClick("settings")}
-          >
-            <IoSettingsOutline className="mr-1" />
-            Settings
-          </span>
-        </li>
-        <li className="mr-2 flex items-center">
-          <span
-            className={`inline-flex cursor-pointer items-center rounded-t-lg border-b-2 px-2 py-2 ${
-              activeTab === "Community Management"
-                ? "rounded-md border-blue-500 bg-primary text-white"
-                : "border-transparent hover:border-gray-300 hover:text-gray-600"
-            }`}
-            onClick={() => handleTabClick("Community Management")}
-          >
-            <BsPeople className="mr-1" />
-            Community Management
-          </span>
-        </li>
-        <li className="mr-2 flex items-center">
-          <span
-            className={`inline-flex cursor-pointer items-center rounded-t-lg border-b-2 px-2 py-2 ${
-              activeTab === "Products"
-                ? "rounded-md border-blue-500 bg-primary text-white"
-                : "border-transparent hover:border-gray-300 hover:text-gray-600"
-            }`}
-            onClick={() => handleTabClick("Products")}
-          >
-            <IoPrintOutline className="mr-1" />
-            Products
-          </span>
-        </li>
-        <li className="mr-2 flex items-center">
-          <span
-            className={`inline-flex cursor-pointer items-center rounded-t-md border-b-2 px-2 py-2 ${
-              activeTab === "logout"
-                ? "rounded-md border-blue-500 bg-primary text-white"
-                : "border-transparent hover:border-red-600 hover:text-red-600"
-            }`}
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "logout"}
+            tabIndex={activeTab === "logout" ? 0 : -1}
+            className={`inline-flex items-center border-b-2 border-transparent px-2 py-2 text-[1.0rem] text-red-800  transition-colors duration-150 hover:border-red-800`}
             onClick={handleLogout}
+            disabled={loggingOut}
           >
             <BiLogOut className="mr-1" />
-            <span
-              className={`${
-                activeTab === "logout"
-                  ? "group-hover:text-gray-500"
-                  : "group-hover:text-red-600"
-              }`}
-            >
-              {loggingOut ? (
-                <ButtonLoadingSpinner loadingText={"Logging out..."} />
-              ) : (
-                "Logout"
-              )}
-            </span>
-          </span>
+            {loggingOut ? (
+              <ButtonLoadingSpinner loadingText="Logging out..." />
+            ) : (
+              "Logout"
+            )}
+          </button>
         </li>
       </ul>
     </div>

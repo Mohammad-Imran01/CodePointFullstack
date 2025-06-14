@@ -12,13 +12,13 @@ const { configLimiter } = require("../middlewares/limiter/limiter");
 
 // 🟢 PUBLIC ROUTES (No auth needed)
 router.get("/courses", getCourses);
-router.get("/courses/:id", getCourseById);
+router.get("/course/:id", getCourseById);
 
 // 🔒 ADMIN-ONLY ROUTES
 // router.use(requireAdminAuth); // Apply admin auth below this line
-
-router.post("/addCourse", configLimiter, addCourse);
-router.put("/courses/:id", configLimiter, updateCourse);
-router.delete("/courses/:id", configLimiter, deleteCourse);
+// moved to admin.route.js
+// router.post("/course", configLimiter, addCourse);
+// router.put("/course/:id", configLimiter, updateCourse);
+// router.delete("/course/:id", configLimiter, deleteCourse);
 
 module.exports = router;

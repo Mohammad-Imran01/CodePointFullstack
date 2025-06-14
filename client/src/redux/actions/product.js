@@ -1,34 +1,54 @@
 import { API, ADMIN_API, handleApiError } from "../api/utils";
-import {
-    FETCH_COURSES_REQUEST,
-    FETCH_COURSES_SUCCESS,
-    FETCH_COURSES_FAILURE,
-    ADD_COURSE_REQUEST,
-    ADD_COURSE_SUCCESS,
-    ADD_COURSE_FAILURE,
-} from "../constants/productConstants";
+import * as Const from "../constants/productConstants";
 
+// ✅ Fetch all courses (Public API)
 export const fetchCourses = () => async (dispatch) => {
-    dispatch({ type: FETCH_COURSES_REQUEST });
+    dispatch({ type: Const.FETCH_COURSES_REQUEST });
 
     try {
         const response = await API.get("/products/courses");
-        console.log("res", response.data)
-        dispatch({ type: FETCH_COURSES_SUCCESS, payload: response.data });
+        dispatch({ type: Const.FETCH_COURSES_SUCCESS, payload: response.data });
     } catch (error) {
         const { error: message } = await handleApiError(error);
-        dispatch({ type: FETCH_COURSES_FAILURE, payload: message });
+        dispatch({ type: Const.FETCH_COURSES_FAILURE, payload: message });
     }
 };
 
+// ✅ Add new course (Admin API)
 export const addCourse = (courseData) => async (dispatch) => {
-    dispatch({ type: ADD_COURSE_REQUEST });
+    dispatch({ type: Const.ADD_COURSE_REQUEST });
 
     try {
-        const response = await ADMIN_API.post("/courses/addCourse", courseData);
-        dispatch({ type: ADD_COURSE_SUCCESS, payload: response.data.course });
+        const response = await ADMIN_API.post("/products/course", courseData);
+        dispatch({ type: Const.ADD_COURSE_SUCCESS, payload: response.data.course });
     } catch (error) {
         const { error: message } = await handleApiError(error);
-        dispatch({ type: ADD_COURSE_FAILURE, payload: message });
+        dispatch({ type: Const.ADD_COURSE_FAILURE, payload: message });
+    }
+};
+
+// ✅ Update a course (Admin API)
+export const updateCourse = (courseId, updatedData) => async (dispatch) => {
+    dispatch({ type: Const.UPDATE_COURSE_REQUEST });
+
+    try {
+        const response = await ADMIN_API.put(`/products/course/${courseId}`, updatedData);
+        dispatch({ type: Const.UPDATE_COURSE_SUCCESS, payload: response.data.course });
+    } catch (error) {
+        const { error: message } = await handleApiError(error);
+        dispatch({ type: Const.UPDATE_COURSE_FAILURE, payload: message });
+    }
+};
+
+// ✅ Delete a course (Admin API)
+export const deleteCourse = (courseId) => async (dispatch) => {
+    dispatch({ type: Const.DELETE_COURSE_REQUEST });
+
+    try {
+        await ADMIN_API.delete(`products/course/${courseId}`);
+        dispatch({ type: Const.DELETE_COURSE_SUCCESS, payload: courseId });
+    } catch (error) {
+        const { error: message } = await handleApiError(error);
+        dispatch({ type: Const.DELETE_COURSE_FAILURE, payload: message });
     }
 };
