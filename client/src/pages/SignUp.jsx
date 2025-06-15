@@ -63,7 +63,7 @@ const SignUpNew = () => {
     }
   };
 
-  const [isConsentGiven, setIsConsentGiven] = useState(false);
+  const [isConsentGiven, setIsConsentGiven] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModerator, setIsModerator] = useState(false);
 
@@ -85,7 +85,7 @@ const SignUpNew = () => {
       );
     }, 5000);
 
-    await dispatch(signUpAction(formData, navigate, isConsentGiven, email));
+    await dispatch(signUpAction(formData, navigate, /*isConsentGiven*/true, email));
     setLoading(false);
     setIsConsentGiven(false);
     clearTimeout(timeout);
@@ -94,6 +94,8 @@ const SignUpNew = () => {
   const handleClearError = () => {
     dispatch(clearMessage());
   };
+
+  console.log(isConsentGiven);
 
   return (
     <section className="bg-white">
@@ -276,8 +278,11 @@ const SignUpNew = () => {
               )}
             </button>
 
-            <div onClick={() => setIsModalOpen(true)} className="mt-6">
-              {isConsentGiven && !isModerator ? (
+            <div
+              onClick={() => setIsModalOpen((prev) => !prev)}
+              className="mt-6"
+            >
+              {isConsentGiven ? (
                 <p className="mt-2 cursor-pointer rounded-lg border border-green-500 px-4 py-3 text-center text-sm font-semibold text-green-600">
                   Context-Based Authentication is enabled
                 </p>

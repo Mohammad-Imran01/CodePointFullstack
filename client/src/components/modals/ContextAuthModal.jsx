@@ -11,9 +11,9 @@ const ContextAuthModal = ({
   return (
     <>
       {isModalOpen && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center z-50">
-          <div className="bg-white p-8 rounded-md max-w-lg w-full">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-500 bg-opacity-75">
+          <div className="w-full max-w-lg rounded-md bg-white p-8">
+            <h2 className="mb-4 text-xl font-bold text-gray-800">
               Context-Based Authentication
             </h2>
             {isModerator ? (
@@ -40,9 +40,9 @@ const ContextAuthModal = ({
                   setIsConsentGiven(false);
                   handleCloseModal();
                 }}
-                className="text-gray-500 mr-4 hover:text-gray-900 focus:outline-none hover:underline"
+                className="mr-4 rounded-md border border-primary px-4 py-2 text-primary  hover:shadow-primary-800/50 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50"
               >
-                {isModerator ? "Close" : "No, thanks"}
+                Disable
               </button>
               <button
                 onClick={() => {
@@ -53,9 +53,9 @@ const ContextAuthModal = ({
                   isModerator
                     ? "hidden"
                     : "bg-primary hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50"
-                } text-white px-4 py-2 rounded-md`}
+                } rounded-md px-4 py-2 text-white`}
               >
-                Yes, enable
+                {isModerator ? "Close" : "Yeah, Keep it!"}
               </button>
             </div>
           </div>

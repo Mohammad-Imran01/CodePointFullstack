@@ -53,40 +53,40 @@ export const logoutAction = () => async (dispatch) => {
 
 export const signUpAction =
   (formData, navigate, isConsentGiven = false, email) =>
-  async (dispatch) => {
-    try {
-      localStorage.removeItem("profile");
-      const response = await api.signUp(formData);
-      const { error } = response;
-      if (error) {
+    async (dispatch) => {
+      try {
+        localStorage.removeItem("profile");
+        const response = await api.signUp(formData);
+        const { error } = response;
+        if (error) {
+          dispatch({
+            type: types.SIGNUP_FAIL,
+            payload: error,
+          });
+        } else {
+          if (!isConsentGiven) {
+            dispatch({
+              type: types.SIGNUP_SUCCESS,
+              payload: types.SIGNUP_SUCCESS_MESSAGE,
+            });
+            navigate("/signin");
+          }
+
+          if (isConsentGiven) {
+            dispatch({
+              type: types.SIGNUP_SUCCESS,
+              payload: types.SIGNUP_SUCCESS_MESSAGE,
+            });
+            navigate("/auth/verify", { state: email });
+          }
+        }
+      } catch (error) {
         dispatch({
           type: types.SIGNUP_FAIL,
-          payload: error,
+          payload: types.ERROR_MESSAGE,
         });
-      } else {
-        if (!isConsentGiven) {
-          dispatch({
-            type: types.SIGNUP_SUCCESS,
-            payload: types.SIGNUP_SUCCESS_MESSAGE,
-          });
-          navigate("/signin");
-        }
-
-        if (isConsentGiven) {
-          dispatch({
-            type: types.SIGNUP_SUCCESS,
-            payload: types.SIGNUP_SUCCESS_MESSAGE,
-          });
-          navigate("/auth/verify", { state: email });
-        }
       }
-    } catch (error) {
-      dispatch({
-        type: types.SIGNUP_FAIL,
-        payload: types.ERROR_MESSAGE,
-      });
-    }
-  };
+    };
 
 export const signInAction = (formData, navigate) => async (dispatch) => {
   try {
