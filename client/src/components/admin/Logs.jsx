@@ -48,23 +48,23 @@ const Logs = () => {
 
   if (loading || !logs) {
     return (
-      <div className="mt-5 flex items-center justify-center">
+      <div className="flex items-center justify-center mt-5">
         <CommonLoading />
       </div>
     );
   }
 
   return (
-    <div className="  mt-3 flex flex-col items-center justify-center rounded-md">
-      <div className="relative  rounded p-4 md:min-w-[800px] lg:min-w-[1000px] xl:min-w-[1200px]">
-        <div className="mb-4 flex items-center justify-between">
+    <div className="  flex flex-col items-center justify-center mt-3 rounded-md">
+      <div className="p-4  rounded relative xl:min-w-[1200px] lg:min-w-[1000px] md:min-w-[800px]">
+        <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold text-gray-800">
             User Activity Logs
           </h1>
           <CurrentTime />
         </div>
 
-        <div className="mb-4 flex items-center justify-between border-b border-gray-200 pb-2">
+        <div className="flex justify-between items-center mb-4 border-b border-gray-200 pb-2">
           <div className="text-sm italic text-gray-600">{`Showing ${logs.length} items from the last 7 days`}</div>
 
           <div className="flex items-center space-x-2">
@@ -72,8 +72,8 @@ const Logs = () => {
               <FcRefresh />
             </button>
             <button
-              className={`rounded bg-blue-500 px-4 py-2 text-sm text-white hover:bg-blue-700 ${
-                clearing ? "cursor-not-allowed opacity-50" : ""
+              className={`bg-blue-500 text-white text-sm py-2 px-4 rounded hover:bg-blue-700 ${
+                clearing ? "opacity-50 cursor-not-allowed" : ""
               } ${logs.length === 0 ? "hidden" : ""}`}
               onClick={handleCleanup}
               disabled={clearing || logs.length === 0}
@@ -89,12 +89,12 @@ const Logs = () => {
 
         {!loading ? (
           logs.length === 0 ? (
-            <div className="text-lg text-gray-500">No logs found</div>
+            <div className="text-gray-500 text-lg">No logs found</div>
           ) : (
             <>
-              <div className="relative h-[430px] overflow-auto">
+              <div className="h-[430px] relative overflow-auto">
                 <div className="w-full rounded">
-                  <div className="grid grid-cols-5 items-center gap-5 border-b py-2 font-semibold text-gray-800">
+                  <div className="grid grid-cols-5 gap-5 items-center border-b py-2 font-semibold text-gray-800">
                     <p className="text-center">Timestamp</p>
                     <p>Message</p>
                     <p>Email Used</p>
@@ -104,9 +104,9 @@ const Logs = () => {
                   {logs.map((log) => (
                     <div
                       key={log._id}
-                      className="grid grid-cols-5 items-center gap-5 border-b py-2 text-sm text-gray-700"
+                      className="grid grid-cols-5 gap-5 items-center border-b py-2 text-sm text-gray-700"
                     >
-                      <span className="font-mono flex-col items-center justify-center text-center">
+                      <span className="flex-col justify-center items-center text-center font-mono">
                         <p>{log.relativeTimestamp}</p>
                         <p className="text-xs">{log.formattedTimestamp}</p>
                       </span>
@@ -139,7 +139,7 @@ const Logs = () => {
                         </span>
                       </td>
                       <td className="">
-                        <ul className="list-inside list-disc">
+                        <ul className="list-disc list-inside">
                           {log.contextData &&
                             Object.entries(log.contextData).map(
                               ([key, value]) => (
@@ -158,7 +158,7 @@ const Logs = () => {
                 </div>
               </div>
 
-              <div className="mt-2 flex justify-center text-sm italic text-gray-600">
+              <div className="flex justify-center text-sm italic text-gray-600 mt-2">
                 logs are automatically deleted after 7 days
               </div>
             </>

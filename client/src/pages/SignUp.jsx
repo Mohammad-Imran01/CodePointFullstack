@@ -102,7 +102,8 @@ const SignUpNew = () => {
       <div className="container mx-auto flex min-h-screen items-center justify-center px-6">
         <form className="w-full max-w-md" onSubmit={handleSubmit}>
           <div className="mx-auto flex justify-center">
-            <img className="h-7 w-auto sm:h-8" src={Logo} alt="" />
+            {/* <img className="h-7 w-auto sm:h-8" src={Logo} alt="" /> */}
+            <h1 className="textTitle">Code Point</h1>
           </div>
           {signUpError &&
             Array.isArray(signUpError) &&

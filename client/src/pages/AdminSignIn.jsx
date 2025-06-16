@@ -38,49 +38,50 @@ const AdminSignIn = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="w-full max-w-sm mx-auto overflow-hidden bg-white rounded-md shadow-md">
+    <div className="flex h-screen items-center justify-center">
+      <div className="mx-auto w-full max-w-sm overflow-hidden rounded-md bg-white shadow-md">
         <div className="px-6 py-4">
-          <div className="flex justify-center mx-auto">
-            <img className="w-auto h-5" src={logo} alt="" />
+          <div className="mx-auto flex justify-center">
+            {/* <img className="w-auto h-5" src={logo} alt="" /> */}
+            <h1 className="textTitle">Code Point</h1>
           </div>
 
           <p className="mt-1 text-center text-gray-500">Sign in as admin</p>
           <form>
-            <div className="w-full mt-4">
+            <div className="mt-4 w-full">
               <input
                 onChange={handleUsernameChange}
-                className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md  focus:border-blue-400  focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-2 block w-full rounded-md border bg-white px-4 py-2 text-gray-700 placeholder-gray-500  focus:border-blue-400  focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                 type="text"
                 placeholder="Username"
                 aria-label="Username"
               />
             </div>
-            <div className="w-full mt-4">
+            <div className="mt-4 w-full">
               <input
                 onChange={handlePasswordChange}
-                className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 bg-white border rounded-md  focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
+                className="mt-2 block w-full rounded-md border bg-white px-4 py-2 text-gray-700 placeholder-gray-500  focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40"
                 type="password"
                 placeholder="Password"
                 aria-label="Password"
               />
             </div>
             {signInError && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md relative mt-4 flex items-center justify-between">
+              <div className="relative mt-4 flex items-center justify-between rounded-md border border-red-400 bg-red-100 px-4 py-3 text-red-700">
                 <span className="block sm:inline">{signInError}</span>
               </div>
             )}
 
-            <div className="flex items-center justify-between mt-4">
+            <div className="mt-4 flex items-center justify-between">
               <Link to="/">
-                <IoIosArrowRoundBack className="inline-block w-4 h-4 mr-2" />
+                <IoIosArrowRoundBack className="mr-2 inline-block h-4 w-4" />
                 Back to home
               </Link>
               <button
                 disabled={signingIn}
                 type="submit"
                 onClick={(e) => handleSubmit(e)}
-                className="px-6 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                className="transform rounded-md bg-blue-500 px-6 py-2 text-sm font-medium capitalize tracking-wide text-white transition-colors duration-300 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
               >
                 {signingIn ? (
                   <ButtonLoadingSpinner loadingText={"Signing in..."} />
