@@ -27,6 +27,7 @@ import Rightbar from "./Rightbar";
 
 import { getModProfileAction } from "../../redux/actions/authActions";
 import CommonLoading from "../loader/CommonLoading";
+import AppLogo from "./AppLogo";
 
 const NavLink = ({ to, icon, label }) => (
   <Link
@@ -78,11 +79,10 @@ const Navbar = ({ userData, toggleLeftbar, showLeftbar }) => {
   }, []);
 
   return (
-    <nav className="flexCenter sticky top-0 z-20 gap-10 bg-white p-2 py-3">
+    <nav className="flexCenter sticky top-0 z-20 gap-10 bg-white p-2 py-3 shadow-sm">
       <div className="flex max-w-screen-xl items-center justify-between gap-5 max-md:w-[93%] md:w-[96%]">
         <Link to="/" className=" md:inline-block">
-          {/* <img className="w-36" src={Logo} alt="" /> */}
-          <h1 className="textTitle">Code Point</h1>
+          <AppLogo mainLogo />
         </Link>
 
         {/* <button className="inline-block md:hidden" onClick={toggleLeftbar}>
@@ -166,6 +166,7 @@ const Navbar = ({ userData, toggleLeftbar, showLeftbar }) => {
           <button
             className="flex shrink-0 items-center justify-center rounded-full bg-stone-200 p-2"
             onClick={() => setShowRightBar((curr) => !curr)}
+            onBlur={() => setShowRightBar(false)}
           >
             {showRightBar ? <RxCross1 /> : <AiOutlineBars />}
           </button>

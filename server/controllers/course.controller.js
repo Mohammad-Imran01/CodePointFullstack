@@ -2,7 +2,6 @@ const Course = require("../models/course.model");
 
 // Create a new course
 const addCourse = async (req, res) => {
-    console.log('Addcourse', req.body)
     try {
         const { title, description, duration, level, price } = req.body;
 
@@ -49,8 +48,6 @@ const getCourseById = async (req, res) => {
 
 // Update a course by ID
 const updateCourse = async (req, res) => {
-    console.log('updateCourse', req.body)
-
     try {
         const { title, description, duration, level, price } = req.body;
 
@@ -73,8 +70,6 @@ const updateCourse = async (req, res) => {
 
 // Delete a course by ID
 const deleteCourse = async (req, res) => {
-
-    console.log('deleteCourse', req.body)
     try {
         const deleted = await Course.findByIdAndDelete(req.params.id);
         if (!deleted) {

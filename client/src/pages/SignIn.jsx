@@ -7,6 +7,7 @@ import { RxCross1 } from "react-icons/rx";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import ButtonLoadingSpinner from "../components/loader/ButtonLoadingSpinner";
 import Logo from "../assets/SocialEcho.png";
+import AppLogo from "../components/shared/AppLogo";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -47,7 +48,7 @@ const SignIn = () => {
         <form className="w-full max-w-md">
           <div className="mx-auto flex justify-center">
             {/* <img className="h-7 w-auto sm:h-8" src={Logo} alt="" /> */}
-            <h1 className="textTitle">Code Point</h1>
+            <AppLogo />
           </div>
           {signInError && (
             <div

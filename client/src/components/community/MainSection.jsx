@@ -107,7 +107,7 @@ const MainSection = () => {
               />
             </div>
             {postError && (
-              <div className="text-red-500 bg-red-100 border border-red-500 p-3 rounded-md text-center mx-auto">
+              <div className="text-red-500 bg-red-100 border border-green-500 p-3 rounded-md text-center mx-auto">
                 {postError}
               </div>
             )}

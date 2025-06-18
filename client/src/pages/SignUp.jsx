@@ -7,6 +7,7 @@ import ContextAuthModal from "../components/modals/ContextAuthModal";
 import { RxCross1 } from "react-icons/rx";
 import ButtonLoadingSpinner from "../components/loader/ButtonLoadingSpinner";
 import Logo from "../assets/SocialEcho.png";
+import AppLogo from "../components/shared/AppLogo";
 
 const SignUpNew = () => {
   const [loading, setLoading] = useState(false);
@@ -95,15 +96,13 @@ const SignUpNew = () => {
     dispatch(clearMessage());
   };
 
-  console.log(isConsentGiven);
-
   return (
     <section className="bg-white">
       <div className="container mx-auto flex min-h-screen items-center justify-center px-6">
         <form className="w-full max-w-md" onSubmit={handleSubmit}>
           <div className="mx-auto flex justify-center">
             {/* <img className="h-7 w-auto sm:h-8" src={Logo} alt="" /> */}
-            <h1 className="textTitle">Code Point</h1>
+            <AppLogo/>
           </div>
           {signUpError &&
             Array.isArray(signUpError) &&
@@ -279,7 +278,7 @@ const SignUpNew = () => {
               )}
             </button>
 
-            <div
+            {/* <div
               onClick={() => setIsModalOpen((prev) => !prev)}
               className="mt-6"
             >
@@ -292,16 +291,16 @@ const SignUpNew = () => {
                   Context-Based Authentication is disabled
                 </p>
               )}
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <ContextAuthModal
                 isModalOpen={isModalOpen}
                 setIsModalOpen={setIsModalOpen}
                 setIsConsentGiven={setIsConsentGiven}
                 isModerator={isModerator}
               />
-            </div>
+            </div> */}
           </div>
         </form>
       </div>

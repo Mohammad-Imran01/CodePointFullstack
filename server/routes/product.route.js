@@ -7,18 +7,20 @@ const {
     deleteCourse,
 } = require("../controllers/course.controller");
 
+const {
+    getInstructors,
+    getInstructorById,
+} = require('../controllers/instructor.controller')
+
 const requireAdminAuth = require("../middlewares/auth/adminAuth");
 const { configLimiter } = require("../middlewares/limiter/limiter");
 
 // 🟢 PUBLIC ROUTES (No auth needed)
+//courses
 router.get("/courses", getCourses);
 router.get("/course/:id", getCourseById);
-
-// 🔒 ADMIN-ONLY ROUTES
-// router.use(requireAdminAuth); // Apply admin auth below this line
-// moved to admin.route.js
-// router.post("/course", configLimiter, addCourse);
-// router.put("/course/:id", configLimiter, updateCourse);
-// router.delete("/course/:id", configLimiter, deleteCourse);
+//instructors
+router.get("/instructors", getInstructors);
+router.get("/instructor/:id", getInstructorById);
 
 module.exports = router;

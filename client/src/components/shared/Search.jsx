@@ -11,6 +11,8 @@ const BASE_URL = process.env.REACT_APP_API_URL;
 const Search = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
+  const [courses, setCourses] = useState([]);
+  const [instructors, setInstructors] = useState([]);
   const [posts, setPosts] = useState([]);
   const [users, setUsers] = useState([]);
   const [community, setCommunity] = useState(null);
@@ -20,6 +22,8 @@ const Search = () => {
   const setInitialValue = () => {
     setUsers([]);
     setPosts([]);
+    setCourses([]);
+    setInstructors([]);
     setCommunity(null);
     setJoinedCommunity(null);
     setLoading(false);
@@ -38,13 +42,23 @@ const Search = () => {
             },
           })
           .then((res) => {
-            const { posts, users, community, joinedCommunity } = res.data;
+            const {
+              posts,
+              users,
+              community,
+              joinedCommunity,
+              courses,
+              instructors,
+            } = res.data;
             setPosts(posts);
             setUsers(users);
+            setCourses(courses);
+            setInstructors(instructors);
             setCommunity(community);
             setJoinedCommunity(joinedCommunity);
             setLoading(false);
           })
+
           .catch(() => {
             setLoading(false);
           });
@@ -79,10 +93,25 @@ const Search = () => {
   const toggleModal = () => {
     setJoinModalVisibility((prev) => !prev);
   };
+  const showSearchResult = () => {
+    return (
+      inputValue !== "" &&
+      (loading ||
+        posts.length > 0 ||
+        users.length > 0 ||
+        courses.length > 0 ||
+        instructors.length > 0 ||
+        community ||
+        joinedCommunity)
+    );
+  };
 
   return (
-    <div className="grow shrink max-w-lg">
-      <div className="relative flex items-center justify-center">
+    <div className="relative max-w-lg shrink grow">
+      <div
+        className="relative flex items-center justify-center"
+        onBlur={() => setInputValue("")}
+      >
         <input
           type="text"
           id="search"
@@ -103,10 +132,13 @@ const Search = () => {
         )}
       </div>
 
-      {inputValue !== "" && (
+      {/* {inputValue !== "" && ( */}
+      {showSearchResult() && (
         <div
           onBlur={() => !community && clearValues()}
-          className="absolute start-0 top-12 w-screen rounded-md border bg-white shadow-md md:start-auto md:w-[660px]"
+          className="absolute left-1/2 z-10 mt-1 max-h-60 w-full min-w-[22rem] -translate-x-1/2  overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg"
+
+          // className="absolute start-0 top-12 w-screen rounded-md border bg-white shadow-md md:start-auto md:w-[660px]"
         >
           {loading && (
             <div className="flex items-center justify-center px-2 py-2">
@@ -225,7 +257,6 @@ const Search = () => {
               </div>
             </div>
           )}
-
           {joinedCommunity && (
             <div
               key={joinedCommunity._id}
@@ -253,6 +284,54 @@ const Search = () => {
                 </div>
               </div>
             </div>
+          )}
+          {courses.length > 0 && (
+            <ul className="z-30">
+              {courses.map((course) => (
+                <li
+                  key={course._id}
+                  className="cursor-pointer border-b px-4 py-2 hover:bg-gray-50"
+                  onClick={() => {
+                    navigate(`/courses/${course._id}`);
+                    clearValues();
+                  }}
+                >
+                  <div>
+                    <p className="font-medium text-gray-900">{course.title}</p>
+                    <p className="text-sm text-gray-500">
+                      {course.description}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Level: {course.level}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+          {instructors.length > 0 && (
+            <ul className="z-30">
+              {instructors.map((inst) => (
+                <li
+                  key={inst._id}
+                  className="cursor-pointer border-b px-4 py-2 hover:bg-gray-50"
+                  onClick={() => {
+                    navigate(`/instructors/${inst._id}`);
+                    clearValues();
+                  }}
+                >
+                  <div>
+                    <p className="font-medium text-gray-900">{inst.name}</p>
+                    <p className="text-sm text-gray-500">
+                      Expertise: {inst.expertise}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      Experience: {inst.experience} yrs
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
       )}

@@ -66,6 +66,11 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    ttlDeleteAt: {
+      type: Date,
+      default: null,
+      index: { expireAfterSeconds: 0 }, // TTL triggers deletion
+    },
   },
   {
     timestamps: true,

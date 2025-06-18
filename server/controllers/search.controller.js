@@ -1,6 +1,8 @@
 const Community = require("../models/community.model");
 const User = require("../models/user.model");
 const Post = require("../models/post.model");
+const Course = require('../models/course.model')
+const Instructor = require('../models/instructor.model')
 
 const search = async (req, res) => {
   try {
@@ -10,7 +12,7 @@ const search = async (req, res) => {
       "_id"
     );
 
-    const [users, posts, joinedCommunity, community] = await Promise.all([
+    const [users, posts, joinedCommunity, community, courses, instructors] = await Promise.all([
       User.find(
         { $text: { $search: searchQuery } },
         { score: { $meta: "textScore" } }
@@ -35,6 +37,19 @@ const search = async (req, res) => {
         $text: { $search: searchQuery },
         members: { $nin: userId },
       }).select("_id name description banner members"),
+      Course.find(
+        { $text: { $search: searchQuery } },
+        { score: { $meta: "textScore" } }
+      ).select("_id title description price level")
+        .sort({ score: { $meta: "textScore" } })
+        .lean(),
+
+      Instructor.find(
+        { $text: { $search: searchQuery } },
+        { score: { $meta: "textScore" } }
+      ).select("_id name expertise experience")
+        .sort({ score: { $meta: "textScore" } })
+        .lean(),
     ]);
 
     posts.forEach((post) => {
@@ -43,8 +58,14 @@ const search = async (req, res) => {
       }
     });
 
-    res.status(200).json({ posts, users, community, joinedCommunity });
-  } catch (error) {
+    res.status(200).json({
+      posts,
+      users,
+      community,
+      joinedCommunity,
+      courses,
+      instructors,
+    });  } catch (error) {
     res.status(500).json({ message: "An error occurred" });
   }
 };

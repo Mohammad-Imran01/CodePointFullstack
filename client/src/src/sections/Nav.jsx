@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AppLogo from "../../components/shared/AppLogo";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -14,8 +15,6 @@ const Nav = () => {
     setMenuOpen(!menuOpen);
   };
 
-  
-
   useEffect(() => {
     if (window.innerWidth >= 640) {
       setMenuOpen(false);
@@ -24,9 +23,7 @@ const Nav = () => {
 
   return (
     <div className="dark:text-white relative flex w-full max-w-[1280px] items-center justify-between text-xl text-slate-900">
-      <a className="textTitle cursor-pointer text-3xl font-normal" href="/">
-        Code Point
-      </a>
+      <AppLogo />
       {/* Desktop Menu */}
       <ul className="hidden gap-12 max-lg:gap-6 max-md:gap-3 sm:flex">
         {["Home", "Company", "Marketplace", "Contact"].map((item) => (

@@ -54,23 +54,22 @@ const AdminPanel = () => {
       <header className="flex w-full items-center justify-center border-b-2">
         <div className="flex w-[98%]  max-w-7xl items-center  justify-between py-3 shadow-purple-200/20 md:w-[95%] md:rounded-md">
           {/* <div className="flex w-full max-w-6xl items-center justify-between md:w-[95%]"> */}
-          <h1 className="text-3xl font-bold text-stone-900">Admin Panel</h1>
+          <h1 className="whitespace-nowrap text-3xl font-bold text-stone-900">
+            Admin Panel
+          </h1>
           <Tab
             tabItems={tabItems}
             activeTab={activeTab}
             handleTabClick={handleTabClick}
           />
-          {/* </div> */}
         </div>
       </header>
 
-      <main className="h-[95%] w-[98%] max-w-7xl overflow-clip rounded-md md:w-[95%]">
-        {/* <div className="rounded-xl bg-red-300 p-6 shadow-xl"> */}
+      <main className="h-[90%] w-[98%] max-w-7xl overflow-clip rounded-md md:w-[95%]">
         {activeTab === "Products" && <ProductManager />}
-        {activeTab === "Community Management" && <CommunityManagement />}
+        {activeTab === "Community" && <CommunityManagement />}
         {activeTab === "logs" && <Logs />}
         {activeTab === "settings" && <Settings />}
-        {/* </div> */}
       </main>
     </div>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import AppLogo from "../../components/shared/AppLogo";
 
 const About = () => {
   return (
@@ -6,14 +7,9 @@ const About = () => {
     <section className="blueBg text-wrap w-full">
       <div className="insideCard">
         <h2 className="sectionHeading">About Us</h2>
-        <p className="text-lg md:text-xl text-center leading-relaxed block text-slate-900 dark:text-white">
+        <p className="dark:text-white block text-center text-lg leading-relaxed text-slate-900 md:text-xl">
           Welcome to{" "}
-          <a
-            className="font-semibold text-slate-900 dark:text-white hover:underline duration-100"
-            href="#"
-          >
-            Code Point
-          </a>{" "}
+          <span className="font-bold text-stone-800">Code Point </span>
           — your go-to platform for practical, project-driven learning. Whether
           you're just starting out or upskilling in areas like programming,
           design, or data science, we offer carefully crafted content that

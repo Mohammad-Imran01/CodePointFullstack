@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 
 import CourseCard from "../components/CourseCard";
-import CourseUpdateForm from "../../components/products/CourseUpdateForm";
-import CourseDeleteModal from "../../components/products/CourseDeleteModal";
+import AddItemButton from "../../components/shared/AddItemButton";
+import ItemUpdateForm from "../../components/products/ItemUpdateForm";
+import ItemDeleteModal from "../../components/products/ItemDeleteModal";
+
 import {
   fetchCourses,
   addCourse,
   updateCourse,
   deleteCourse,
-} from "../../redux/actions/product";
+} from "../../redux/actions/productActions";
 
 const initialCourse = {
   title: "",
@@ -55,10 +56,7 @@ const Courses = ({ hasAdminAccess }) => {
         ? await dispatch(addCourse(current))
         : await dispatch(updateCourse(current._id, current));
       dispatch(fetchCourses());
-      toast.success(`Course ${isNew ? "added" : "updated"} successfully`);
-    } catch {
-      toast.error("Operation failed");
-    }
+    } catch {}
     cancelEdit();
   };
 
@@ -67,28 +65,24 @@ const Courses = ({ hasAdminAccess }) => {
     try {
       await dispatch(deleteCourse(confirmDelete._id));
       dispatch(fetchCourses());
-      toast.success("Course deleted");
-    } catch {
-      toast.error("Failed to delete");
+    } catch (err) {
+      console.log("Error to remove a course");
     }
     setConfirmDelete(null);
   };
 
   return (
-    <section className="blueBg relative w-full">
+    <section className="blueBg relative w-full shrink-0">
       {!editing && hasAdminAccess && (
-        <div className="absolute right-0 top-0 p-4">
-          <button
-            onClick={() => startEdit(initialCourse, true)}
-            className="rounded bg-purple-400 px-4 py-2 text-white hover:bg-purple-500"
-          >
-            + Add Course
-          </button>
-        </div>
+        <AddItemButton onClick={() => startEdit(initialCourse, true)} />
       )}
 
       <div className="insideCard">
-        {!hasAdminAccess && <h2 className="sectionHeading">Our Courses</h2>}
+        <h2
+          className={hasAdminAccess ? "sectionHeadingAdmin" : "sectionHeading"}
+        >
+          {hasAdminAccess ? "Manage Courses" : "Our Courses"}
+        </h2>
         <div className="max-h-[calc(2*12rem+2rem)] overflow-y-auto pr-2">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => (
@@ -98,7 +92,10 @@ const Courses = ({ hasAdminAccess }) => {
                 hasAdminAccess={hasAdminAccess}
                 isEditingMode={editing}
                 courseEditHandle={() => startEdit(course)}
-                handleDeleteCourse={() => setConfirmDelete(course)}
+                handleDeleteCourse={() => {
+                  setConfirmDelete(course);
+                  setCurrent(course);
+                }}
               />
             ))}
           </div>
@@ -106,18 +103,19 @@ const Courses = ({ hasAdminAccess }) => {
       </div>
 
       {editing && hasAdminAccess && (
-        <CourseUpdateForm
+        <ItemUpdateForm
           isNew={isNew}
           data={current}
           setData={setCurrent}
           onCancel={cancelEdit}
           onSave={saveEdit}
+          courseForm={true}
         />
       )}
 
       {confirmDelete && (
-        <CourseDeleteModal
-          course={confirmDelete}
+        <ItemDeleteModal
+          title={current.title}
           onCancel={() => setConfirmDelete(null)}
           onConfirm={confirmRemove}
         />

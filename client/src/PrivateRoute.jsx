@@ -48,7 +48,7 @@ const PrivateRoute = ({ userData }) => {
   // };
 
   return isAuthenticated(userData, accessToken) ? (
-    <div className="scroll-smooth border-2 border-red-500">
+    <div className="scroll-smooth">
       <Navbar
         userData={userData}
         // toggleLeftbar={toggleLeftbar}

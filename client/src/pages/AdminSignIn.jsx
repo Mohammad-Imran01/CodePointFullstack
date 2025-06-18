@@ -5,6 +5,7 @@ import ButtonLoadingSpinner from "../components/loader/ButtonLoadingSpinner";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { signInAction } from "../redux/actions/adminActions";
 import { useDispatch, useSelector } from "react-redux";
+import AppLogo from "../components/shared/AppLogo";
 
 const AdminSignIn = () => {
   const dispatch = useDispatch();
@@ -42,8 +43,7 @@ const AdminSignIn = () => {
       <div className="mx-auto w-full max-w-sm overflow-hidden rounded-md bg-white shadow-md">
         <div className="px-6 py-4">
           <div className="mx-auto flex justify-center">
-            {/* <img className="w-auto h-5" src={logo} alt="" /> */}
-            <h1 className="textTitle">Code Point</h1>
+            <AppLogo />
           </div>
 
           <p className="mt-1 text-center text-gray-500">Sign in as admin</p>

@@ -1,7 +1,28 @@
-import React from "react";
+import InstructorCard from "../components/InstructorCard";
 
-const Instructors = () => {
-  let instructors = [
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import AddItemButton from "../../components/shared/AddItemButton";
+import CourseUpdateForm from "../../components/products/ItemUpdateForm";
+import ItemDeleteModal from "../../components/products/ItemDeleteModal";
+
+import {
+  fetchInstructors,
+  addInstructor,
+  updateInstructor,
+  deleteInstructor,
+} from "../../redux/actions/productActions";
+
+const initialInstructor = {
+  name: "",
+  expertise: "",
+  experience: "",
+  coursesTaught: "",
+};
+
+const Instructors = ({ hasAdminAccess }) => {
+  let instructors_ = [
     {
       name: "John Doe",
       expertise: "Full-Stack Development",
@@ -21,32 +42,101 @@ const Instructors = () => {
       coursesTaught: 10,
     },
   ];
+
+  const [editing, setEditing] = useState(false);
+  const [isNew, setIsNew] = useState(false);
+  const [current, setCurrent] = useState(initialInstructor);
+  const [confirmDelete, setConfirmDelete] = useState(null);
+
+  const dispatch = useDispatch();
+  const { data: instructors } = useSelector((state) => state.instructors);
+
+  useEffect(() => {
+    dispatch(fetchInstructors());
+  }, [dispatch]);
+
+  useEffect(() => {
+    document.body.style.overflow = editing ? "hidden" : "unset";
+  }, [editing]);
+
+  const startEdit = (param = initialInstructor, isNew = false) => {
+    setCurrent(param);
+    setIsNew(isNew);
+    setEditing(true);
+  };
+
+  const cancelEdit = () => {
+    setEditing(false);
+    setCurrent(initialInstructor);
+  };
+
+  const saveEdit = async (ev) => {
+    ev.preventDefault();
+    try {
+      isNew
+        ? await dispatch(addInstructor(current))
+        : await dispatch(updateInstructor(current._id, current));
+      dispatch(fetchInstructors());
+    } catch {}
+    cancelEdit();
+  };
+  const confirmRemove = async () => {
+    if (!confirmDelete) return;
+    try {
+      await dispatch(deleteInstructor(confirmDelete._id));
+      dispatch(fetchInstructors());
+    } catch {}
+    setConfirmDelete(null);
+  };
+
   return (
-    <section className="blueBg text-wrap w-full">
+    <section className="blueBg text-wrap relative w-full">
+      {!editing && hasAdminAccess && (
+        <AddItemButton onClick={() => startEdit(initialInstructor, true)} />
+      )}
       <div className="insideCard">
-        <h2 className="sectionHeading">Meet Your Instructors</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          <h2
+            className={
+              hasAdminAccess ? "sectionHeadingAdmin" : "sectionHeading"
+            }
+          >
+            {hasAdminAccess ? "Manage Instructors" : "Meet Your Instructors"}
+          </h2>
+        }
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {instructors.map((instructor, index) => (
-            <div
-              key={index}
-              className="rounded-lg border border-slate-400 bg-white/30 dark:bg-slate-700/30 text-stone-800 dark:text-stone-100 shadow-sm/30 p-6"
-            >
-              <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
-                {instructor.name}
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300 mt-2">
-                Expertise: {instructor.expertise}
-              </p>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">
-                Experience: {instructor.experience}
-              </p>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">
-                Courses Taught: {instructor.coursesTaught}
-              </p>
-            </div>
+            <InstructorCard
+              key={instructor.name}
+              {...instructor}
+              hasAdminAccess={hasAdminAccess}
+              isEditingMode={editing}
+              onEditHandler={() => startEdit(instructor)}
+              onDeleteHandler={() => {
+                setConfirmDelete(instructor);
+                setCurrent(instructor);
+              }}
+            />
           ))}
         </div>
       </div>
+      {editing && hasAdminAccess && (
+        <CourseUpdateForm
+          isNew={isNew}
+          data={current}
+          setData={setCurrent}
+          onCancel={cancelEdit}
+          onSave={saveEdit}
+          instructorForm={true}
+        />
+      )}
+      {confirmDelete && (
+        <ItemDeleteModal
+          title={current.name}
+          onCancel={() => setConfirmDelete(null)}
+          onConfirm={confirmRemove}
+        />
+      )}
     </section>
   );
 };

@@ -21,9 +21,11 @@ const courseSchema = new mongoose.Schema({
     price: {
         type: String,
         required: true
-    }
+    },
+    instructors: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Instructor' }]
 }, {
     timestamps: true
 });
+courseSchema.index({ title: "text", description: "text" });
 
 module.exports = mongoose.model('Course', courseSchema);

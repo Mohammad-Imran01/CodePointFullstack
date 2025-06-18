@@ -28,6 +28,7 @@ const MESSAGE = {
   SIGN_IN_ERROR: "Error occurred while signing in user: ",
   INCORRECT_EMAIL: "Incorrect email",
   INCORRECT_PASSWORD: "Incorrect password",
+  UNVERIFIED_EMAIL: "Login without Email verification",
   DEVICE_BLOCKED: "Sign in attempt from blocked device",
   CONTEXT_DATA_VERIFY_ERROR: "Context data verification failed",
   MULTIPLE_ATTEMPT_WITHOUT_VERIFY:
@@ -78,6 +79,22 @@ const signin = async (req, res, next) => {
         message: "Invalid credentials",
       });
     }
+
+    // Dont allow if the login link was not confirmed.
+    if (!existingUser.isEmailVerified) {
+      await saveLogInfo(
+        req,
+        MESSAGE.UNVERIFIED_EMAIL,
+        LOG_TYPE.SIGN_IN,
+        LEVEL.WARN
+      );
+
+      return res.status(403).json({
+        message:
+          "Your email is not verified. Please check your inbox and verify your email before signing in.",
+      });
+    }
+
 
     const isContextAuthEnabled = await UserPreference.findOne({
       user: existingUser._id,
@@ -293,9 +310,8 @@ const addUser = async (req, res, next) => {
   const defaultAvatar =
     "https://raw.githubusercontent.com/nz-m/public-files/main/dp.jpg";
   const fileUrl = req.files?.[0]?.filename
-    ? `${req.protocol}://${req.get("host")}/assets/userAvatars/${
-        req.files[0].filename
-      }`
+    ? `${req.protocol}://${req.get("host")}/assets/userAvatars/${req.files[0].filename
+    }`
     : defaultAvatar;
 
   const emailDomain = req.body.email.split("@")[1];
@@ -307,6 +323,7 @@ const addUser = async (req, res, next) => {
     password: hashedPassword,
     role: role,
     avatar: fileUrl,
+    ttlDeleteAt: new Date(Date.now() + 15 * 60 * 1000), // 15 minutes from now
   });
 
   try {

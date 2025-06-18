@@ -118,7 +118,9 @@ const PublicProfile = () => {
   );
 
   return (
-    <div className="main-section">
+    <div
+      className="main-section max-w-screen-xl  md:w-[96%] mx-auto"
+    >
       <div className="rounded border bg-white px-6 py-6">
         <div className="flex flex-col items-center justify-center bg-white py-6">
           <div className="relative">
@@ -261,7 +263,7 @@ const PublicProfile = () => {
               {interests.split(",").map((interest, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                   {interest.trim()}
                 </span>

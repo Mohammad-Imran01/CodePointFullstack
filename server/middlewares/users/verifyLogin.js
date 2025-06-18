@@ -41,7 +41,7 @@ const sendLoginVerificationEmail = async (req, res) => {
     });
 
     let info = await transporter.sendMail({
-      from: `"SocialEcho" <${USER}>`,
+      from: `"CodePoint" <${USER}>`,
       to: email,
       subject: "Action Required: Verify Recent Login",
       html: verifyLoginHTML(
@@ -50,6 +50,8 @@ const sendLoginVerificationEmail = async (req, res) => {
         blockLink,
         currentContextData
       ),
+    }).then(() => {
+      console.log('Email was sent')
     });
 
     const newVerification = new EmailVerification({

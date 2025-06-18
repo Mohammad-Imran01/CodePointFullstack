@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const CourseDeleteModal = ({ course, onCancel, onConfirm }) => {
+const ItemDeleteModal = ({ title, onCancel, onConfirm }) => {
   const [countdown, setCountdown] = useState(null);
   const [canConfirm, setCanConfirm] = useState(false);
 
@@ -41,10 +41,11 @@ const CourseDeleteModal = ({ course, onCancel, onConfirm }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
         <h3 className="mb-4 text-lg font-semibold text-gray-800">
-          Are you sure you want to delete:
+          Are you sure you want to remove:
         </h3>
         <p className="mb-6 text-gray-600">
-          "{course?.title}" will be permanently removed.
+          <span className="font-bold  text-stone-950">{title}</span> will be
+          permanently removed.
         </p>
         <div className="flex justify-end gap-4">
           <button
@@ -85,4 +86,4 @@ const CourseDeleteModal = ({ course, onCancel, onConfirm }) => {
   );
 };
 
-export default CourseDeleteModal;
+export default ItemDeleteModal;

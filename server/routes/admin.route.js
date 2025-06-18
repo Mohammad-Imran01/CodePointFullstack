@@ -19,6 +19,11 @@ const {
   deleteCourse,
 } = require("../controllers/course.controller");
 
+const {
+  addInstructor,
+  updateInstructor,
+  removeInstructor,
+} = require('../controllers/instructor.controller')
 
 const requireAdminAuth = require("../middlewares/auth/adminAuth");
 const {
@@ -51,6 +56,9 @@ router
 router.post("/products/course", configLimiter, addCourse);
 router.put("/products/course/:id", configLimiter, updateCourse);
 router.delete("/products/course/:id", configLimiter, deleteCourse);
-
+// Admin-only Course Routes (Already behind requireAdminAuth)
+router.post("/products/instructor", configLimiter, addInstructor);
+router.put("/products/instructor/:id", configLimiter, updateInstructor);
+router.delete("/products/instructor/:id", configLimiter, removeInstructor);
 
 module.exports = router;

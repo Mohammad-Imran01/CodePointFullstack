@@ -8,6 +8,7 @@ import userReducer from "./user";
 import adminReducer from "./admin";
 
 import coursesReducer from "./product";
+import instructorReducer from "./instructor"
 
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   admin: adminReducer,
   courses: coursesReducer,
+  instructors: instructorReducer,
 });
 
 export default rootReducer;

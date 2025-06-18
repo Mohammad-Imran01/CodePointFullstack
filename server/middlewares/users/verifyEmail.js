@@ -38,7 +38,7 @@ const sendVerificationEmail = async (req, res) => {
     });
 
     let info = await transporter.sendMail({
-      from: `"SocialEcho" <${USER}>`,
+      from: `"Code Point" <${USER}>`,
       to: email,
       subject: "Verify your email address",
       html: verifyEmailHTML(name, verificationLink, verificationCode),
@@ -88,7 +88,11 @@ const verifyEmail = async (req, res, next) => {
 
     const updatedUser = await User.findOneAndUpdate(
       { email: { $eq: email } },
-      { isEmailVerified: true },
+      // { isEmailVerified: true },
+      {
+        $set: { isEmailVerified: true },
+        $unset: { ttlDeleteAt: "" }, // ❌ remove the TTL field
+      },
       { new: true }
     ).exec();
 
