@@ -300,6 +300,8 @@ const getUser = async (req, res, next) => {
  * @param {Function} next - The next middleware function to call if consent is given by the user to enable context based auth.
  */
 const addUser = async (req, res, next) => {
+  if (req.existingUnverifiedUser) 
+    return next()
   let newUser;
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   /**

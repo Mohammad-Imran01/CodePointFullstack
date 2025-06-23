@@ -198,22 +198,22 @@ const Navbar = ({ userData, toggleLeftbar, showLeftbar }) => {
                     <div className="flex flex-col gap-4">
                       <div className="flex flex-col items-center gap-2 text-center">
                         <img
-                          src={moderator.avatar}
+                          src={moderator?.avatar || userData?.avatar || ""}
                           alt="user"
                           className="h-20 w-20 rounded-full object-cover"
                         />
 
                         <Link to={`/profile`}>
                           <p className="font-bold">
-                            {userData?.name || moderator?.name}
+                            {userData?.name || moderator?.name || "User"}
                           </p>
                         </Link>
 
                         <p className="text-sm text-gray-600">
-                          {moderator.email}
+                          {moderator?.email || userData?.email || ""}
                         </p>
                         <p className="text-xs text-gray-500">
-                          Joined: {moderator.createdAt}
+                          Joined: {userData?.createdAt || moderator?.createdAt || ""}
                         </p>
                       </div>
 

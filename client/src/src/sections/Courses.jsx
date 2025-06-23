@@ -36,6 +36,9 @@ const Courses = ({ hasAdminAccess }) => {
 
   useEffect(() => {
     document.body.style.overflow = editing ? "hidden" : "unset";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [editing]);
 
   const startEdit = (course = initialCourse, isNew = false) => {
@@ -73,16 +76,21 @@ const Courses = ({ hasAdminAccess }) => {
 
   return (
     <section className="blueBg relative w-full shrink-0">
-      {!editing && hasAdminAccess && (
-        <AddItemButton onClick={() => startEdit(initialCourse, true)} />
-      )}
-
       <div className="insideCard">
-        <h2
-          className={hasAdminAccess ? "sectionHeadingAdmin" : "sectionHeading"}
-        >
-          {hasAdminAccess ? "Manage Courses" : "Our Courses"}
-        </h2>
+        {hasAdminAccess ? (
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+            <h2 className="sectionHeadingAdmin">Manage Courses</h2>
+            {!editing && (
+              <AddItemButton
+                wrapperClassName="whitespace-nowrap"
+                onClick={() => startEdit(initialCourse, true)}
+              />
+            )}
+          </div>
+        ) : (
+          <h2 className="sectionHeading mb-8">Our Courses</h2>
+        )}
+
         <div className="max-h-[calc(2*12rem+2rem)] overflow-y-auto pr-2">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => (

@@ -16,6 +16,7 @@ import Instructors from "../../src/sections/Instructors";
 import Contact from "../../src/sections/Contact";
 import FAQs from "../../src/sections/FAQs";
 import Footer from "../../src/sections/Footer";
+import MainMCQ from "../mcq/MainMCQ";
 
 const MemoizedPost = memo(Post);
 const Container = ({ children, className = "" }) => {
@@ -98,6 +99,10 @@ const MainSection = ({ userData }) => {
 
       <Container className="!md:p-44 dark:bg-slate-800 bg-blue-50 !py-32">
         <Hero />
+      </Container>
+
+      <Container>
+        <MainMCQ/>
       </Container>
 
       <Container>

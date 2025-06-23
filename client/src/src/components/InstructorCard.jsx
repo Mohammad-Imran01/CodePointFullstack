@@ -30,7 +30,7 @@ const InstructorCard = ({
         Expertise: {expertise}
       </p>
       <p className="dark:text-gray-400 mt-1 text-gray-500">
-        Experience: {experience}
+        Experience: {experience + ' years'}
       </p>
       <p className="dark:text-gray-400 mt-1 text-gray-500">
         Courses Taught: {coursesTaught}

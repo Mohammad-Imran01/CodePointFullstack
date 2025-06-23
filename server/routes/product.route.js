@@ -1,19 +1,21 @@
 const router = require("express").Router();
 const {
-    addCourse,
     getCourses,
     getCourseById,
-    updateCourse,
-    deleteCourse,
 } = require("../controllers/course.controller");
 
 const {
     getInstructors,
     getInstructorById,
-} = require('../controllers/instructor.controller')
+} = require('../controllers/instructor.controller');
 
-const requireAdminAuth = require("../middlewares/auth/adminAuth");
-const { configLimiter } = require("../middlewares/limiter/limiter");
+const {
+    getAllGenericMCQs,
+    getGenericMCQById,
+    createGenericMCQ,
+    updateGenericMCQById,
+    deleteGenericMCQById,
+} = require("../controllers/mcq/mcq.controller");
 
 // 🟢 PUBLIC ROUTES (No auth needed)
 //courses
@@ -22,5 +24,9 @@ router.get("/course/:id", getCourseById);
 //instructors
 router.get("/instructors", getInstructors);
 router.get("/instructor/:id", getInstructorById);
+//mcqs
+router.get('/genericMCQs', getAllGenericMCQs)
+router.get('/genericMCQs/:id', getGenericMCQById)
+
 
 module.exports = router;

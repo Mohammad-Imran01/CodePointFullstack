@@ -22,27 +22,6 @@ const initialInstructor = {
 };
 
 const Instructors = ({ hasAdminAccess }) => {
-  let instructors_ = [
-    {
-      name: "John Doe",
-      expertise: "Full-Stack Development",
-      experience: "10 years",
-      coursesTaught: 20,
-    },
-    {
-      name: "Jane Smith",
-      expertise: "UX/UI Design",
-      experience: "8 years",
-      coursesTaught: 15,
-    },
-    {
-      name: "Alice Johnson",
-      expertise: "Data Science",
-      experience: "5 years",
-      coursesTaught: 10,
-    },
-  ];
-
   const [editing, setEditing] = useState(false);
   const [isNew, setIsNew] = useState(false);
   const [current, setCurrent] = useState(initialInstructor);
@@ -57,6 +36,9 @@ const Instructors = ({ hasAdminAccess }) => {
 
   useEffect(() => {
     document.body.style.overflow = editing ? "hidden" : "unset";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [editing]);
 
   const startEdit = (param = initialInstructor, isNew = false) => {
@@ -91,19 +73,21 @@ const Instructors = ({ hasAdminAccess }) => {
 
   return (
     <section className="blueBg text-wrap relative w-full">
-      {!editing && hasAdminAccess && (
-        <AddItemButton onClick={() => startEdit(initialInstructor, true)} />
-      )}
       <div className="insideCard">
-        {
-          <h2
-            className={
-              hasAdminAccess ? "sectionHeadingAdmin" : "sectionHeading"
-            }
-          >
-            {hasAdminAccess ? "Manage Instructors" : "Meet Your Instructors"}
-          </h2>
-        }
+        {hasAdminAccess ? (
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+            <h2 className="sectionHeadingAdmin">Manage Instructors</h2>
+            {!editing && (
+              <AddItemButton
+                wrapperClassName="whitespace-nowrap"
+                onClick={() => startEdit(initialInstructor, true)}
+              />
+            )}
+          </div>
+        ) : (
+          <h2 className="sectionHeading mb-8">Our Instructors</h2>
+        )}
+
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {instructors.map((instructor, index) => (
             <InstructorCard

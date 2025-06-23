@@ -2,6 +2,7 @@ import React from "react";
 
 import Courses from "../../src/sections/Courses";
 import Instructors from "../../src/sections/Instructors";
+import MainMCQ from "../mcq/MainMCQ";
 
 const ProductManager = () => {
   return (
@@ -20,6 +21,7 @@ const ProductManager = () => {
       <div className="flex min-h-0 flex-grow flex-col gap-5 overflow-y-auto">
         <Courses hasAdminAccess={true} />
         <Instructors hasAdminAccess={true} />
+        <MainMCQ hasAdminAccess={true} />
       </div>
       <div className="py-5"></div>
     </div>
