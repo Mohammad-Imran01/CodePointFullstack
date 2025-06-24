@@ -149,13 +149,17 @@ const MainMCQ = ({ hasAdminAccess }) => {
   return (
     <section className="blueBg text-wrap relative w-full">
       <div className="insideCard">
-        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+        <div
+          className={`mb-8 flex flex-wrap items-center ${
+            hasAdminAccess ? "justify-between" : "justify-center"
+          } gap-4`}
+        >
           <h2
             className={
               hasAdminAccess ? "sectionHeadingAdmin" : "sectionHeading mb-8"
             }
           >
-            {hasAdminAccess ? "Manage MCQs" : "MCQ Quiz"}
+            {hasAdminAccess ? "Manage MCQs" : <p>Solve MCQs of the day</p>}
           </h2>
 
           {hasAdminAccess && !editing && (
