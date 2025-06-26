@@ -119,7 +119,7 @@ const MainMCQ = ({ hasAdminAccess }) => {
   const handleFileUpload = useCallback(
     async (e) => {
       const file = e.target.files?.[0];
-      if (!file) return;
+      if (!file) {return;}
 
       setUploading(true);
 
@@ -144,7 +144,7 @@ const MainMCQ = ({ hasAdminAccess }) => {
       }
     },
     [dispatch]
-  );
+  )
 
   return (
     <section className="blueBg text-wrap relative w-full">
