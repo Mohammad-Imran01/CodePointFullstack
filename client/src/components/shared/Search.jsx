@@ -7,6 +7,7 @@ import { MoonLoader } from "react-spinners";
 import { MdClear } from "react-icons/md";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
+const GUEST_TOKEN = process.env.GUEST_KEYWORD;
 
 const Search = () => {
   const navigate = useNavigate();
@@ -29,17 +30,26 @@ const Search = () => {
     setLoading(false);
   };
 
+  const searchRequestHeader = () => ({
+    Authorization: `Bearer ${accessToken || GUEST_TOKEN}`,
+    "Content-Type": "application/json",
+  });
+
   const debouncedHandleSearch = useMemo(
     () =>
       debounce((q) => {
         setLoading(true);
         const encodedQuery = encodeURIComponent(q);
+        // axios
+        //   .get(`${BASE_URL}/search?q=${encodedQuery}`, {
+        //     headers: {
+        //       Authorization: `Bearer ${accessToken}`,
+        //       "Content-Type": "application/json",
+        //     },
+        //   })
         axios
           .get(`${BASE_URL}/search?q=${encodedQuery}`, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
+            headers: searchRequestHeader(),
           })
           .then((res) => {
             const {
