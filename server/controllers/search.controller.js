@@ -7,12 +7,29 @@ const Instructor = require('../models/instructor.model')
 const search = async (req, res) => {
   try {
     const searchQuery = req.query.q;
-    const userId = req.userId;
-    const communities = await Community.find({ members: userId }).distinct(
-      "_id"
-    );
+    const userId = req.userId || null;
+    const communities = userId ?
+      await Community.find({ members: userId }).distinct(
+        "_id"
+      ) : []
 
-    const [users, posts, joinedCommunity, community, courses, instructors] = await Promise.all([
+    const joinedCommunity = userId
+      ? await Community.findOne({
+        $text: { $search: searchQuery },
+        members: { $in: [userId] }, // wrap in array
+      }).select("_id name description banner members")
+      : null;
+    const community = userId
+      ? await Community.findOne({
+        $text: { $search: searchQuery },
+        members: { $nin: [userId] }, // wrap in array
+      }).select("_id name description banner members")
+      : await Community.findOne({
+        $text: { $search: searchQuery }
+      }).select("_id name description banner members");
+
+
+    const [users, posts, /*joinedCommunity, community,*/ courses, instructors] = await Promise.all([
       User.find(
         { $text: { $search: searchQuery } },
         { score: { $meta: "textScore" } }
@@ -29,14 +46,14 @@ const search = async (req, res) => {
         .populate("community", "name")
         .lean()
         .exec(),
-      Community.findOne({
-        $text: { $search: searchQuery },
-        members: { $in: userId },
-      }).select("_id name description banner members"),
-      Community.findOne({
-        $text: { $search: searchQuery },
-        members: { $nin: userId },
-      }).select("_id name description banner members"),
+      // Community.findOne({
+      //   $text: { $search: searchQuery },
+      //   members: { $in: userId },
+      // }).select("_id name description banner members"),
+      // Community.findOne({
+      //   $text: { $search: searchQuery },
+      //   members: { $nin: userId },
+      // }).select("_id name description banner members"),
       Course.find(
         { $text: { $search: searchQuery } },
         { score: { $meta: "textScore" } }
@@ -65,7 +82,8 @@ const search = async (req, res) => {
       joinedCommunity,
       courses,
       instructors,
-    });  } catch (error) {
+    });
+  } catch (error) {
     res.status(500).json({ message: "An error occurred" });
   }
 };

@@ -303,3 +303,26 @@
     transform: translateX(calc(-100% - 32px));
   }
 }
+
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient-border {
+  background: linear-gradient(270deg, #00f2fe, #4facfe, #43e97b, #38f9d7, #fa709a, #fee140, #fa709a, #00f2fe);
+  background-size: 1600% 1600%;
+  animation: gradient-move 20s ease-in-out infinite;
+  padding: 5px;
+  /* border thickness */
+  border-radius: 1rem;
+}

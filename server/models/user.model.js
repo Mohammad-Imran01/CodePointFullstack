@@ -61,6 +61,20 @@ const userSchema = new Schema(
         default: [],
       },
     ],
+    coursesTaken: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Course",
+        default: [],
+      },
+    ],
+    coursesCreated: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Course",
+        default: [],
+      },
+    ],
 
     isEmailVerified: {
       type: Boolean,

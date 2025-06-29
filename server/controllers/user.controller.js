@@ -258,6 +258,20 @@ const getUser = async (req, res, next) => {
     user.totalPostCommunities = totalPostCommunities;
     user.duration = "";
 
+    let taken = ["taken 1", 'taken 2', 'taken 3'],
+      created = ["craeted1 ", 'created 2', 'created 3']
+
+    user.coursesCreatedIds = user.coursesCreated?.map(id => id.toString()) || [];
+    user.coursesTakenIds = user.coursesTaken?.map(id => id.toString()) || [];
+    // console.log(
+    //   req.params.id,
+    //   user.coursesCreatedIds, 
+    //   user.coursesTakenIds
+    // )
+
+    // user.coursesCreatedIds = created?.map(id => id.toString()) || [];
+    // user.coursesTakenIds = taken.map(id => id.toString()) || [];
+
     if (durationMinutes < 60) {
       user.duration = `${Math.floor(durationMinutes)} minutes`;
     } else if (durationHours < 24) {
@@ -300,7 +314,7 @@ const getUser = async (req, res, next) => {
  * @param {Function} next - The next middleware function to call if consent is given by the user to enable context based auth.
  */
 const addUser = async (req, res, next) => {
-  if (req.existingUnverifiedUser) 
+  if (req.existingUnverifiedUser)
     return next()
   let newUser;
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -460,11 +474,14 @@ const updateInfo = async (req, res) => {
       });
     }
 
-    const { location, interests, bio } = req.body;
+    const { location, interests, bio, coursesTaken, coursesCreated } = req.body;
+    console.log('server got:\n', location, interests, bio, coursesTaken, coursesCreated)
 
     user.location = location;
     user.interests = interests;
     user.bio = bio;
+    user.coursesTaken = coursesTaken;
+    user.coursesCreated = coursesCreated;
 
     await user.save();
 

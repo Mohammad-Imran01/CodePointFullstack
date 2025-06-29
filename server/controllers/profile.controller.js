@@ -16,15 +16,17 @@ dayjs.extend(duration);
  */
 const getPublicUsers = async (req, res) => {
   try {
-    const userId = req.userId;
+    const userId = req.userId || null;
 
-    const followingIds = await Relationship.find({ follower: userId }).distinct(
-      "following"
-    );
+    const excludedIds = [];
+    if (userId) {
+      const followingIds = await Relationship.find({ follower: userId }).distinct(
+        "following"
+      );
+      const userIdObj = mongoose.Types.ObjectId(userId);
+      excludedIds = [...followingIds, userIdObj];
+    }
 
-    const userIdObj = mongoose.Types.ObjectId(userId);
-
-    const excludedIds = [...followingIds, userIdObj];
 
     const usersToDisplay = await User.aggregate([
       {
@@ -88,7 +90,7 @@ const getPublicUsers = async (req, res) => {
  */
 const getPublicUser = async (req, res) => {
   try {
-    const currentUserId = req.userId;
+    const currentUserId = req.userId || null;
     const id = req.params.id;
 
     const user = await User.findById(id).select(
@@ -103,11 +105,11 @@ const getPublicUser = async (req, res) => {
       .select("name")
       .lean();
 
-    const currentUserCommunities = await Community.find({
+    const currentUserCommunities = currentUserId ? await Community.find({
       members: currentUserId,
     })
       .select("_id name")
-      .lean();
+      .lean() : []
 
     const userCommunities = await Community.find({ members: user._id })
       .select("_id name")
@@ -117,10 +119,12 @@ const getPublicUser = async (req, res) => {
       return userCommunities.some((userComm) => userComm._id.equals(comm._id));
     });
 
-    const isFollowing = await Relationship.findOne({
-      follower: currentUserId,
-      following: user._id,
-    });
+    const isFollowing = currentUserId
+      ? await Relationship.findOne({
+        follower: currentUserId,
+        following: user._id,
+      })
+      : null;  // or false, depending on your usage
 
     const followingSince = isFollowing
       ? dayjs(isFollowing.createdAt).format("MMM D, YYYY")

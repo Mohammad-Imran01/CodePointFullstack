@@ -6,8 +6,15 @@ import OwnProfileCard from "./OwnProfileCard";
 import CommonLoading from "../loader/CommonLoading";
 import OwnInfoCard from "./OwnInfoCard";
 import NoPost from "../../assets/nopost.jpg";
+import CourseCard from "../../src/components/CourseCard";
+import {
+  fetchCreatedCourses,
+  fetchTakenCourses,
+} from "../../redux/actions/productActions";
 
 const UserProfile = ({ userData }) => {
+  const coursesTaken = useSelector((state) => state.courses?.takenCourses);
+  const coursesCreated = useSelector((state) => state.courses?.createdCourses);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user?.user);
@@ -15,50 +22,101 @@ const UserProfile = ({ userData }) => {
 
   useEffect(() => {
     setLoading(true);
-    const fetchUser = async () => {
-      await dispatch(getUserAction(userData._id));
-    };
-    fetchUser().then(() => setLoading(false));
+    dispatch(getUserAction(userData._id)).finally(() => setLoading(false));
   }, [dispatch, userData._id]);
 
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchTakenCourses(user.coursesTakenIds || []));
+      dispatch(fetchCreatedCourses(user.coursesCreatedIds || []));
+    }
+  }, [dispatch, user]);
+
   const MemoizedPostOnProfile = memo(PostOnProfile);
-
-  let postToShow;
-
-  postToShow = posts?.map((post) => (
-    <MemoizedPostOnProfile key={post._id} post={post} />
-  ));
 
   return (
     <>
       {loading || !user || !posts ? (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex h-screen items-center justify-center bg-gray-50">
           <CommonLoading />
         </div>
       ) : (
-        <>
-          <OwnProfileCard user={user} />
-          <OwnInfoCard user={user} />
+        <div className="mx-auto max-w-5xl px-4 py-8">
+          {/* Profile Cards */}
+          <div className="mb-6 flex flex-col gap-4 md:flex-row md:gap-8">
+            <OwnProfileCard user={user} />
+            <OwnInfoCard user={user} />
+          </div>
 
-          <h3 className="font-semibold text-center mb-4 text-gray-700 p-3 border-b">
-            Your most recent posts
-          </h3>
-
-          {postToShow?.length === 0 ? (
-            <div className="text-center text-gray-700 flex justify-center items-center flex-col">
-              <p className="font-semibold py-5 text-gray-500">
-                You haven't posted anything yet
-              </p>
-              <img
-                className="max-w-md rounded-full"
-                src={NoPost}
-                alt="no post"
-              />
+          {/* Courses Section */}
+          <section className="mb-10 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+              <div>
+                <h3 className="mb-3 border-b border-gray-100 pb-1 text-lg font-semibold text-gray-800">
+                  Courses Taken
+                </h3>
+                {coursesTaken.length ? (
+                  <div className="flex flex-col gap-4">
+                    {coursesTaken.map((course) => (
+                      <CourseCard
+                        key={course._id}
+                        {...course}
+                        isCourseTaken={user?.coursesTakenIds?.includes(
+                          course._id
+                        )}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-sm italic text-gray-400">
+                    No courses taken yet.
+                  </div>
+                )}
+              </div>
+              <div>
+                <h3 className="mb-3 border-b border-gray-100 pb-1 text-lg font-semibold text-gray-800">
+                  Courses Created
+                </h3>
+                {coursesCreated.length ? (
+                  <div className="flex flex-col gap-4">
+                    {coursesCreated.map((course) => (
+                      <CourseCard key={course._id} {...course} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-sm italic text-gray-400">
+                    No courses created yet.
+                  </div>
+                )}
+              </div>
             </div>
-          ) : (
-            postToShow
-          )}
-        </>
+          </section>
+
+          {/* Posts Section */}
+          <section>
+            <h3 className="mb-4 border-b border-gray-200 pb-2 text-center text-xl font-semibold text-gray-700">
+              Your Most Recent Posts
+            </h3>
+            {posts.length === 0 ? (
+              <div className="flex flex-col items-center justify-center text-center text-gray-700">
+                <p className="py-5 font-semibold text-gray-500">
+                  You haven't posted anything yet
+                </p>
+                <img
+                  className="max-w-xs rounded-xl border border-gray-200 shadow"
+                  src={NoPost}
+                  alt="no post"
+                />
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {posts.map((post) => (
+                  <MemoizedPostOnProfile key={post._id} post={post} />
+                ))}
+              </div>
+            )}
+          </section>
+        </div>
       )}
     </>
   );

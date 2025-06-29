@@ -19,15 +19,11 @@ const jwt = require("jsonwebtoken");
 
 // module.exports = decodeToken;
 
-
-const jwt = require("jsonwebtoken");
-
 /**
  * Middleware to decode and verify JWT or allow guest access.
  * If a valid JWT is provided, sets req.userId.
  * If guest token matches, sets req.isGuest = true.
  */
-
 const decodeToken = (req, res, next) => {
   const authHeader = req.headers.authorization || "";
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import debounce from "lodash/debounce";
@@ -7,7 +7,8 @@ import { MoonLoader } from "react-spinners";
 import { MdClear } from "react-icons/md";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
-const GUEST_TOKEN = process.env.GUEST_KEYWORD;
+const REACT_APP_GUEST_KEYWORD =
+  process.env.REACT_APP_GUEST_KEYWORD || "GUEST_KEYWORD";
 
 const Search = () => {
   const navigate = useNavigate();
@@ -30,10 +31,12 @@ const Search = () => {
     setLoading(false);
   };
 
-  const searchRequestHeader = () => ({
-    Authorization: `Bearer ${accessToken || GUEST_TOKEN}`,
-    "Content-Type": "application/json",
-  });
+  const searchRequestHeader = () => {
+    return {
+      Authorization: `Bearer ${accessToken || REACT_APP_GUEST_KEYWORD}`,
+      "Content-Type": "application/json",
+    };
+  };
 
   const debouncedHandleSearch = useMemo(
     () =>
@@ -73,7 +76,8 @@ const Search = () => {
             setLoading(false);
           });
       }, 800),
-    [accessToken]
+    // [accessToken]
+    []
   );
 
   const handleInputChange = (e) => {
@@ -118,10 +122,7 @@ const Search = () => {
 
   return (
     <div className="relative max-w-lg shrink grow">
-      <div
-        className="relative flex items-center justify-center"
-        onBlur={() => setInputValue("")}
-      >
+      <div className="relative flex items-center justify-center">
         <input
           type="text"
           id="search"
@@ -145,7 +146,9 @@ const Search = () => {
       {/* {inputValue !== "" && ( */}
       {showSearchResult() && (
         <div
-          onBlur={() => !community && clearValues()}
+          onBlur={() => {
+            !community && clearValues();
+          }}
           className="absolute left-1/2 z-10 mt-1 max-h-60 w-full min-w-[22rem] -translate-x-1/2  overflow-y-auto rounded-md border border-gray-200 bg-white shadow-lg"
 
           // className="absolute start-0 top-12 w-screen rounded-md border bg-white shadow-md md:start-auto md:w-[660px]"
@@ -196,7 +199,10 @@ const Search = () => {
           {users.length > 0 && (
             <ul className="z-30">
               {users.map((user) => (
-                <li key={user._id} className="border-b px-4 py-2">
+                <li
+                  key={user._id}
+                  className="overflow-hidden rounded-md border-2 border-transparent px-4 py-2 transition-colors hover:border-blue-400"
+                >
                   <div
                     onClick={() => {
                       navigate(`/user/${user._id}`);
@@ -205,6 +211,7 @@ const Search = () => {
                     className="block cursor-pointer text-sm text-gray-700 hover:text-indigo-500"
                   >
                     <div className="flex items-center">
+                      <p>{user._id}</p>
                       <div className="flex-shrink-0">
                         <img
                           src={user.avatar}

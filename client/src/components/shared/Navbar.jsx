@@ -186,7 +186,7 @@ const Navbar = ({ userData, toggleLeftbar, showLeftbar }) => {
                   ) : (
                     <div className="flex flex-col gap-3">
                       <NavLink
-                        to="/login"
+                        to="/signin"
                         icon={<FaSignInAlt />}
                         label="Login"
                       />

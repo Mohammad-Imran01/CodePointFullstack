@@ -16,6 +16,52 @@ export const fetchCourses = () => async (dispatch) => {
     }
 };
 
+// ✅ Fetch a course by id (Public API)
+export const fetchCourseById = (id) => async (dispatch) => {
+    dispatch({ type: Const.FETCH_COURSE_BY_ID_REQUEST });
+    try {
+        const response = await API.get(`/products/course/${id}`);
+        dispatch({ type: Const.FETCH_COURSE_BY_ID_SUCCESS, payload: response });
+        console.log('response.data', response.data)
+        return response.data; // <-- Add this!
+    } catch (error) {
+        const { error: message } = await handleApiError(error);
+        dispatch({ type: Const.FETCH_COURSE_BY_ID_FAILURE, payload: message });
+        throw error; // <-- Optionally throw for error handling
+    }
+};
+
+
+// actions/productActions.js
+
+export const fetchTakenCourses = (courseIds) => async (dispatch) => {
+    dispatch({ type: Const.FETCH_TAKEN_COURSES_REQUEST });
+    try {
+        const taken = [];
+        for (let id of courseIds) {
+            const res = await dispatch(fetchCourseById(id));
+            if (res) taken.push(res);
+        }
+        dispatch({ type: Const.FETCH_TAKEN_COURSES_SUCCESS, payload: taken });
+    } catch (error) {
+        dispatch({ type: Const.FETCH_TAKEN_COURSES_FAILURE, payload: error.message });
+    }
+};
+export const fetchCreatedCourses = (courseIds) => async (dispatch) => {
+    dispatch({ type: Const.FETCH_CREATED_COURSES_REQUEST });
+    try {
+        const created = [];
+        for (let id of courseIds) {
+            const res = await dispatch(fetchCourseById(id));
+            if (res) created.push(res);
+        }
+        dispatch({ type: Const.FETCH_CREATED_COURSES_SUCCESS, payload: created });
+    } catch (error) {
+        dispatch({ type: Const.FETCH_CREATED_COURSES_FAILURE, payload: error.message });
+    }
+};
+
+
 // ✅ Add new course (Admin API)
 export const addCourse = (courseData) => async (dispatch) => {
     dispatch({ type: Const.ADD_COURSE_REQUEST });

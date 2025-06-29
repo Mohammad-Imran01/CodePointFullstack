@@ -35,6 +35,7 @@ const getCourses = async (req, res) => {
 // Get a single course by ID
 const getCourseById = async (req, res) => {
     try {
+        console.log('body', req.params)
         const course = await Course.findById(req.params.id);
         if (!course) {
             return res.status(404).json({ message: "Course not found" });

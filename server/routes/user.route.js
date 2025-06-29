@@ -40,8 +40,12 @@ const {
 const decodeToken = require("../middlewares/auth/decodeToken");
 const requireAuth = passport.authenticate("jwt", { session: false }, null);
 
-router.get("/public-users/:id", requireAuth, decodeToken, getPublicUser);
-router.get("/public-users", requireAuth, decodeToken, getPublicUsers);
+//removed sign in must checker for public profile getters
+// router.get("/public-users/:id", requireAuth, decodeToken, getPublicUser);
+// router.get("/public-users", requireAuth, decodeToken, getPublicUsers);
+router.get("/public-users/:id", decodeToken, getPublicUser);
+router.get("/public-users", decodeToken, getPublicUsers);
+
 router.get("/moderator", requireAuth, decodeToken, getModProfile);
 router.get("/following", requireAuth, decodeToken, getFollowingUsers);
 router.get("/:id", requireAuth, getUser);

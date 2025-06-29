@@ -21,6 +21,7 @@ const {
 //courses
 router.get("/courses", getCourses);
 router.get("/course/:id", getCourseById);
+
 //instructors
 router.get("/instructors", getInstructors);
 router.get("/instructor/:id", getInstructorById);
