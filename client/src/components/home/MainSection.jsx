@@ -97,12 +97,12 @@ const MainSection = ({ userData }) => {
         </div>
       )} */}
 
-      <Container className="!md:p-44 dark:bg-slate-800 bg-blue-50 !py-32">
+      <Container className="!md:p-44 dark:bg-slate-800 bg-blue-50 max-md:!pb-16 md:!py-32">
         <Hero />
       </Container>
 
       <Container>
-        <MainMCQ/>
+        <MainMCQ userData={userData} />
       </Container>
 
       <Container>
@@ -114,7 +114,7 @@ const MainSection = ({ userData }) => {
       </Container>
 
       <Container>
-        <Courses />
+        <Courses userData={userData} />
       </Container>
 
       <Container>

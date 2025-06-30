@@ -18,6 +18,12 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const handleVisitAsGuest = () => {
+    localStorage.setItem("userGuest", "true");
+    navigate("/"); // or navigate("/home")
+  };
+  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -169,6 +175,14 @@ const SignIn = () => {
                 "Sign in"
               )}
             </button>
+            <div className="mt-4">
+              <button
+                onClick={handleVisitAsGuest}
+                className="w-full transform rounded-lg border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-gray-700 transition-colors duration-300 hover:bg-gray-100"
+              >
+                Visit as Guest
+              </button>
+            </div>
           </div>
         </form>
         <span className="flex items-center justify-center py-4 text-sm text-gray-600 ">

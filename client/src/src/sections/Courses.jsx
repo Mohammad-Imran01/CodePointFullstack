@@ -26,19 +26,18 @@ const initialCourse = {
   price: "",
 };
 
-const Courses = ({ hasAdminAccess }) => {
+const Courses = ({ hasAdminAccess, userData }) => {
   const [editing, setEditing] = useState(false);
   const [isNew, setIsNew] = useState(false);
   const [current, setCurrent] = useState(initialCourse);
   const [confirmDelete, setConfirmDelete] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const [showAuthRequiredPopup, setShowAuthRequiredPopup] = useState(false)
+  const [showAuthRequiredPopup, setShowAuthRequiredPopup] = useState(false);
 
   const dispatch = useDispatch();
   const { data: courses } = useSelector((state) => state.courses);
 
-  const userData = useSelector((state) => state.auth?.userData);
   const user = useSelector((state) => state.user?.user);
 
   useEffect(() => {

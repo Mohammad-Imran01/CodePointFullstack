@@ -1,24 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import Navbar from "./components/shared/Navbar";
 
 const PrivateRoute = ({ userData }) => {
-
   const token = localStorage.getItem("profile");
   const accessToken = JSON.parse(token)?.accessToken;
+  const [isReady, setIsReady] = useState(false);
+
   const isGuest = localStorage.getItem("userGuest") === "true";
   const isAuthenticated = userData && accessToken;
 
   useEffect(() => {
-    if (!isAuthenticated && !isGuest) {
-      localStorage.setItem("userGuest", "true");
-    }
-    if (isAuthenticated) {
-      localStorage.removeItem("userGuest");
-    }
+    // if (!isAuthenticated && !isGuest) {
+    //   localStorage.setItem("userGuest", "true");
+    // }
+    if (isAuthenticated) localStorage.removeItem("userGuest");
+
+    setIsReady(true); // Now ready to render
   }, [isAuthenticated, isGuest]);
 
-  if (isAuthenticated || isGuest) {
+  if (!isReady) {
+    // Optional: show loading while resolving guest/auth
+    return <div>Loading...</div>;
+  }
+
+  if (isAuthenticated || localStorage.getItem("userGuest") === "true") {
     return (
       <div className="scroll-smooth">
         <Navbar userData={userData} />

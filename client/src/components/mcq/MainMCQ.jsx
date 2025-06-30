@@ -13,6 +13,7 @@ import AddItemButton from "../shared/AddItemButton";
 import ItemDeleteModal from "../products/ItemDeleteModal";
 import MCQItem from "./MCQItem";
 import MCQForm from "./McqForm";
+import AuthRequiredPopup from "../shared/AuthRequiredPopup";
 
 // Default MCQ state
 const initialMCQ = {
@@ -41,7 +42,7 @@ const formatMCQ = (item) => {
   };
 };
 
-const MainMCQ = ({ hasAdminAccess }) => {
+const MainMCQ = ({ hasAdminAccess, userData }) => {
   const dispatch = useDispatch();
   const { data: mcqs = [] } = useSelector((state) => state.mcq);
 
@@ -51,6 +52,7 @@ const MainMCQ = ({ hasAdminAccess }) => {
   const [confirmDelete, setConfirmDelete] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [dailyMCQs, setDailyMCQs] = useState([]);
+  const [showAuthRequiredPopup, setShowAuthRequiredPopup] = useState(false);
 
   // Load MCQs on mount
   useEffect(() => {
@@ -119,7 +121,9 @@ const MainMCQ = ({ hasAdminAccess }) => {
   const handleFileUpload = useCallback(
     async (e) => {
       const file = e.target.files?.[0];
-      if (!file) {return;}
+      if (!file) {
+        return;
+      }
 
       setUploading(true);
 
@@ -144,10 +148,16 @@ const MainMCQ = ({ hasAdminAccess }) => {
       }
     },
     [dispatch]
-  )
+  );
 
   return (
     <section className="blueBg text-wrap relative w-full">
+      <AuthRequiredPopup
+        open={showAuthRequiredPopup}
+        onClose={() => {
+          setShowAuthRequiredPopup(false);
+        }}
+      />
       <div className="insideCard">
         <div
           className={`mb-8 flex flex-wrap items-center ${
@@ -159,7 +169,7 @@ const MainMCQ = ({ hasAdminAccess }) => {
               hasAdminAccess ? "sectionHeadingAdmin" : "sectionHeading mb-8"
             }
           >
-            {hasAdminAccess ? "Manage MCQs" : <p>Solve MCQs of the day</p>}
+            {hasAdminAccess ? "Manage MCQs" : <p> Solve MCQs of the day</p>}
           </h2>
 
           {hasAdminAccess && !editing && (
@@ -216,12 +226,13 @@ const MainMCQ = ({ hasAdminAccess }) => {
                   hasAdminAccess={hasAdminAccess}
                   setConfirmDelete={setConfirmDelete}
                   startEdit={startEdit}
+                  userData={userData}
+                  handleUnsignedEffect={() => setShowAuthRequiredPopup(true)}
                 />
               )
           )}
         </div>
       </div>
-
       {/* Form Modal */}
       {editing && hasAdminAccess && (
         <MCQForm
@@ -232,7 +243,6 @@ const MainMCQ = ({ hasAdminAccess }) => {
           onSave={saveEdit}
         />
       )}
-
       {/* Delete Confirmation Modal */}
       {confirmDelete && (
         <ItemDeleteModal

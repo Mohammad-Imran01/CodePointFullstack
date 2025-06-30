@@ -5,10 +5,10 @@ const Hero = () => {
   return (
     <section className="flex items-center justify-center mt-[58px] grow text-wrap">
       <div className="flex items-center justify-center flex-col">
-        <p className="text-8xl text-slate-900 dark:text-white font-semibold mb-4 text-center">
+        <p className="text-7xl text-slate-900 dark:text-white font-semibold mb-4 text-center">
           Lead <span className="text-red-400">Career</span>
         </p>
-        <p className="text-2xl leading-8 text-slate-900 dark:text-white text-center">
+        <p className="text-xl leading-7 leading-8 text-slate-900 dark:text-white text-center">
           Welcome to your own coding school! Learning is a journey, not a
           destination.
         </p>

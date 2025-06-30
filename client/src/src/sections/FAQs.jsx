@@ -46,15 +46,17 @@ const FAQs = () => {
     setOpenId(openId === id ? null : id);
   };
 
+  
+
   return (
     <section className=" text-wrap w-full">
       <div className="blueBg insideCard">
-        <h1 className="sectionHeading">Frequently Asked Questions</h1>
+        <h1 className="sectionHeading ">Frequently Asked Questions</h1>
         <ul>
           {faqData.map(({ id, question, answer }) => (
             <li
               key={id}
-              className="mb-4 rounded-lg border border-slate-400 bg-white/30 dark:bg-slate-700/30 text-stone-800 dark:text-stone-100 shadow-sm/30"
+              className="dark:bg-slate-700/30 dark:text-stone-100 shadow-sm/30 mb-4 rounded-lg border border-slate-400 bg-white/30 text-stone-800"
             >
               <button
                 onClick={() => toggle(id)}
@@ -64,7 +66,7 @@ const FAQs = () => {
                 <span>{openId === id ? "−" : "+"}</span>
               </button>
               {openId === id && (
-                <div className="px-6 pb-4 transition-opacity duration-300 ease-in-out text-stone-700 dark:text-stone-200">
+                <div className="dark:text-stone-200 px-6 pb-4 text-stone-700 transition-opacity duration-300 ease-in-out">
                   <p className="">{answer}</p>
                 </div>
               )}

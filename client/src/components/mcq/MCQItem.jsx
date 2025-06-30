@@ -7,6 +7,8 @@ const MCQItem = ({
   qIndex,
   setConfirmDelete,
   startEdit,
+  userData,
+  handleUnsignedEffect,
 }) => {
   const [answerShown, setAnswerShown] = useState(false);
   const [hintShown, setHintShown] = useState(false);
@@ -50,6 +52,11 @@ const MCQItem = ({
             value={option}
             className="mr-2"
             onChange={() => {
+              if (!userData) {
+                handleUnsignedEffect();
+                return;
+              }
+
               if (optionSelected) return;
               setOptionSelected(oIndex);
             }}
@@ -72,7 +79,13 @@ const MCQItem = ({
       <div className="mt-4 flex flex-wrap gap-3">
         {!hasAdminAccess && (
           <button
-            onClick={() => setAnswerShown((prev) => !prev)}
+            onClick={() => {
+              if (!userData) {
+                handleUnsignedEffect();
+                return;
+              }
+              setAnswerShown((prev) => !prev);
+            }}
             className={`flex items-center gap-2 rounded-lg border border-stone-700 bg-stone-800 px-4 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-stone-900 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-stone-500`}
           >
             {answerShown ? "Hide Answer" : "View Answer"}
@@ -81,7 +94,13 @@ const MCQItem = ({
 
         {!hasAdminAccess && !answerShown && (
           <button
-            onClick={() => setHintShown((prev) => !prev)}
+            onClick={() => {
+              if (!userData) {
+                handleUnsignedEffect();
+                return;
+              }
+              setHintShown((prev) => !prev);
+            }}
             className={`flex items-center gap-2 rounded-lg border border-yellow-500 bg-yellow-100 px-4 py-2 text-sm font-semibold text-stone-800 transition duration-200 hover:bg-yellow-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-400`}
           >
             {hintShown ? "Hide Hint" : "Show Hint"}
