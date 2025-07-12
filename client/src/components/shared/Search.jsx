@@ -211,7 +211,6 @@ const Search = () => {
                     className="block cursor-pointer text-sm text-gray-700 hover:text-indigo-500"
                   >
                     <div className="flex items-center">
-                      <p>{user._id}</p>
                       <div className="flex-shrink-0">
                         <img
                           src={user.avatar}

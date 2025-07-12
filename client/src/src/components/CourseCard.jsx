@@ -15,7 +15,7 @@ const CourseCard = ({
   isCourseTaken,
   handleUpdateUserCourses,
   user,
-  handleUnsignedEffect
+  handleUnsignedEffect,
 }) => {
   const handleEdit = () => {
     courseEditHandle({ _id, title, description, duration, level, price });
@@ -25,7 +25,7 @@ const CourseCard = ({
     handleDeleteCourse({ _id, title, description, duration, level, price });
   };
   return (
-    <div className="dark:bg-slate-700/30 dark:text-stone-100 shadow-sm/30 relative shrink-0 rounded-lg border border-slate-400 bg-white/30 p-6 text-stone-800">
+    <div className="dark:bg-slate-700/30 dark:text-stone-100 shadow-sm/30 relative shrink-0 grow rounded-lg border border-slate-400 bg-white/30 p-6 text-stone-800">
       <div className="">
         {hasAdminAccess && !isEditingMode && (
           <EditDeleteButton
@@ -54,12 +54,12 @@ const CourseCard = ({
                 className="rounded-md border-2 border-stone-800 px-2 py-1 text-stone-800 transition-all duration-200 hover:border-stone-500 hover:text-stone-700"
                 onClick={() => {
                   if (!user || !user._id) {
-                    handleUnsignedEffect()
-                    return
+                    handleUnsignedEffect();
+                    return;
                   }
-                    isCourseTaken
-                      ? handleUpdateUserCourses(_id, null) // remove course
-                      : handleUpdateUserCourses(null, _id); // buy course
+                  isCourseTaken
+                    ? handleUpdateUserCourses(_id, null) // remove course
+                    : handleUpdateUserCourses(null, _id); // buy course
                 }}
               >
                 {isCourseTaken ? "Leave Course" : "Buy Course"}

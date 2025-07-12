@@ -475,13 +475,12 @@ const updateInfo = async (req, res) => {
     }
 
     const { location, interests, bio, coursesTaken, coursesCreated } = req.body;
-    console.log('server got:\n', location, interests, bio, coursesTaken, coursesCreated)
 
-    user.location = location;
-    user.interests = interests;
-    user.bio = bio;
-    user.coursesTaken = coursesTaken;
-    user.coursesCreated = coursesCreated;
+    user.location = location || user.location;
+    user.interests = interests || user.interests;
+    user.bio = bio || user.bio;
+    user.coursesTaken = coursesTaken || user.coursesTaken;
+    user.coursesCreated = coursesCreated || user.coursesCreated;
 
     await user.save();
 

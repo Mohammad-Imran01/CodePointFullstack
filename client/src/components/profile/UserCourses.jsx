@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import CourseCard from "../components/CourseCard";
-import AuthRequiredPopup from "../../components/shared/AuthRequiredPopup";
-import AddItemButton from "../../components/shared/AddItemButton";
-import ItemUpdateForm from "../../components/products/ItemUpdateForm";
-import ItemDeleteModal from "../../components/products/ItemDeleteModal";
 
 import {
   fetchCourses,
@@ -17,6 +12,11 @@ import {
   getUserAction,
   updateUserAction,
 } from "../../redux/actions/userActions";
+import AuthRequiredPopup from "../shared/AuthRequiredPopup";
+import AddItemButton from "../shared/AddItemButton";
+import CourseCard from "../../src/components/CourseCard";
+import ItemUpdateForm from "../products/ItemUpdateForm";
+import ItemDeleteModal from "../products/ItemDeleteModal";
 
 const initialCourse = {
   title: "",
@@ -26,17 +26,18 @@ const initialCourse = {
   price: "",
 };
 
-const Courses = ({
-  hasAdminAccess,
+const UserCourses = ({
   userData,
   filterByCoursesTaken,
   filterByCoursesCreated,
+  hasAdminAccess=false
 }) => {
   const [editing, setEditing] = useState(false);
   const [isNew, setIsNew] = useState(false);
   const [current, setCurrent] = useState(initialCourse);
   const [confirmDelete, setConfirmDelete] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [coursesFiltered, setCoursesFiltered] = useState([]);
 
   const [showAuthRequiredPopup, setShowAuthRequiredPopup] = useState(false);
 
@@ -45,8 +46,27 @@ const Courses = ({
 
   const user = useSelector((state) => state.user?.user);
 
+  useEffect(() => {
+    const filterData = async () => {
+      setLoading(true);
+      let coursesTemp = [];
 
-  
+      if (filterByCoursesTaken) {
+        coursesTemp = allCourses.filter((item, ind) =>
+          user?.coursesTakenIds.includes(item._id)
+        );
+      } else if (filterByCoursesCreated) {
+        coursesTemp = allCourses.filter((item, ind) =>
+          user.coursesCreatedIds.includes(item._id)
+        );
+      } else {
+        coursesTemp = allCourses;
+      }
+      setCoursesFiltered(() => coursesTemp);
+      setLoading(false);
+    };
+    filterData().then(() => setLoading(() => false));
+  }, [user, allCourses, filterByCoursesTaken, filterByCoursesCreated]);
 
   useEffect(() => {
     setLoading(true);
@@ -143,9 +163,13 @@ const Courses = ({
           }}
         />
 
+        {}
+
         {hasAdminAccess ? (
           <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-            <h2 className="sectionHeadingAdmin">Manage Courses</h2>
+            {!filterByCoursesCreated && !filterByCoursesTaken && (
+              <h2 className="sectionHeadingAdmin">Manage Courses</h2>
+            )}
             {!editing && (
               <AddItemButton
                 wrapperClassName="whitespace-nowrap"
@@ -154,28 +178,47 @@ const Courses = ({
             )}
           </div>
         ) : (
-          <h2 className="sectionHeading mb-8">Our Courses</h2>
+          <>
+            {!filterByCoursesCreated && !filterByCoursesTaken && (
+              <h2 className="sectionHeading mb-8">Our Courses</h2>
+            )}
+          </>
         )}
 
         <div className="max-h-[calc(2*12rem+2rem)] overflow-y-auto pr-2">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {allCourses?.map((course) => (
-              <CourseCard
-                key={course._id}
-                {...course}
-                hasAdminAccess={hasAdminAccess}
-                isEditingMode={editing}
-                courseEditHandle={() => startEdit(course)}
-                handleDeleteCourse={() => {
-                  setConfirmDelete(course);
-                  setCurrent(course);
-                }}
-                handleUpdateUserCourses={handleUpdateUserCourses}
-                isCourseTaken={user?.coursesTakenIds?.includes(course._id)}
-                user={user}
-                handleUnsignedEffect={() => setShowAuthRequiredPopup(true)}
-              />
-            ))}
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-2">
+            {coursesFiltered.length ? (
+              coursesFiltered?.map((course) => (
+                <CourseCard
+                  key={course._id}
+                  {...course}
+                  hasAdminAccess={hasAdminAccess}
+                  isEditingMode={editing}
+                  courseEditHandle={() => startEdit(course)}
+                  handleDeleteCourse={() => {
+                    setConfirmDelete(course);
+                    setCurrent(course);
+                  }}
+                  handleUpdateUserCourses={handleUpdateUserCourses}
+                  isCourseTaken={user?.coursesTakenIds?.includes(course._id)}
+                  user={user}
+                  handleUnsignedEffect={() => setShowAuthRequiredPopup(true)}
+                />
+              ))
+            ) : (
+              <>
+                {filterByCoursesTaken && (
+                  <div className="text-sm italic text-gray-400">
+                    No courses taken yet.
+                  </div>
+                )}
+                {filterByCoursesCreated && (
+                  <div className="text-sm italic text-gray-400">
+                    No courses created yet.
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -202,4 +245,4 @@ const Courses = ({
   );
 };
 
-export default Courses;
+export default UserCourses;

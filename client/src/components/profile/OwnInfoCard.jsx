@@ -1,6 +1,6 @@
 const OwnInfoCard = ({ user }) => {
   return (
-    <div className="bg-white rounded-md border p-6 space-y-2 my-5">
+    <div className="flex-grow space-y-2 rounded-md border bg-white p-6 md:w-4/12">
       <div className="flex flex-wrap items-center justify-between">
         <h3 className="text-lg font-medium text-gray-800">Profile Summary</h3>
         <div className="text-sm text-gray-500">

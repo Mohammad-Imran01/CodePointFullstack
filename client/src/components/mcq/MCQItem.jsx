@@ -84,7 +84,11 @@ const MCQItem = ({
                 handleUnsignedEffect();
                 return;
               }
-              setAnswerShown((prev) => !prev);
+              // setAnswerShown((prev) => !prev);
+              setAnswerShown((prev) => {
+                if (!prev) setOptionSelected(item.correctOption);
+                return !prev;
+              });
             }}
             className={`flex items-center gap-2 rounded-lg border border-stone-700 bg-stone-800 px-4 py-2 text-sm font-semibold text-white transition duration-200 hover:bg-stone-900 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-stone-500`}
           >

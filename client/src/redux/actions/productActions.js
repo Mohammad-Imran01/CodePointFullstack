@@ -22,7 +22,6 @@ export const fetchCourseById = (id) => async (dispatch) => {
     try {
         const response = await API.get(`/products/course/${id}`);
         dispatch({ type: Const.FETCH_COURSE_BY_ID_SUCCESS, payload: response });
-        console.log('response.data', response.data)
         return response.data; // <-- Add this!
     } catch (error) {
         const { error: message } = await handleApiError(error);

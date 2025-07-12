@@ -14,12 +14,14 @@ import { FiUsers, FiUser, FiUserMinus, FiUserPlus } from "react-icons/fi";
 import { HiOutlineDocumentText } from "react-icons/hi2";
 import CommonLoading from "../components/loader/CommonLoading";
 import Tooltip from "../components/shared/Tooltip";
+import AuthRequiredPopup from "../components/shared/AuthRequiredPopup";
 
 const PublicProfile = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [showAuthRequiredPopup, setShowAuthRequiredPopup] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
   const [unfollowLoading, setUnfollowLoading] = useState(false);
 
@@ -38,6 +40,7 @@ const PublicProfile = () => {
 
   useEffect(() => {
     if (publicUserId === userData?._id) {
+      console.log("replaced");
       navigate("/profile", { replace: true });
     }
   }, [publicUserId, userData, navigate]);
@@ -118,9 +121,13 @@ const PublicProfile = () => {
   );
 
   return (
-    <div
-      className="main-section max-w-screen-xl  md:w-[96%] mx-auto"
-    >
+    <div className="main-section mx-auto  max-w-screen-xl md:w-[96%]">
+      <AuthRequiredPopup
+        open={showAuthRequiredPopup}
+        onClose={() => {
+          setShowAuthRequiredPopup(false);
+        }}
+      />{" "}
       <div className="rounded border bg-white px-6 py-6">
         <div className="flex flex-col items-center justify-center bg-white py-6">
           <div className="relative">
@@ -138,7 +145,13 @@ const PublicProfile = () => {
             {!isModerator && !isFollowing && (
               <FollowButton
                 loading={followLoading}
-                onClick={() => handleFollow(publicUserId)}
+                onClick={() => {
+                  if (!userData || !userData._id) {
+                    setShowAuthRequiredPopup(true);
+                    return;
+                  }
+                  handleFollow(publicUserId);
+                }}
                 name={name}
               />
             )}

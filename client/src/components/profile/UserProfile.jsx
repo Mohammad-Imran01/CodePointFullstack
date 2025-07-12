@@ -11,6 +11,8 @@ import {
   fetchCreatedCourses,
   fetchTakenCourses,
 } from "../../redux/actions/productActions";
+import Courses from "../../src/sections/Courses";
+import UserCourses from "./UserCourses";
 
 const UserProfile = ({ userData }) => {
   const coursesTaken = useSelector((state) => state.courses?.takenCourses);
@@ -43,20 +45,20 @@ const UserProfile = ({ userData }) => {
       ) : (
         <div className="mx-auto max-w-5xl px-4 py-8">
           {/* Profile Cards */}
-          <div className="mb-6 flex flex-col gap-4 md:flex-row md:gap-8">
+          <div className="mb-6 flex flex-col justify-between gap-6 md:flex-row md:gap-10">
             <OwnProfileCard user={user} />
             <OwnInfoCard user={user} />
           </div>
 
           {/* Courses Section */}
           <section className="mb-10 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="flex flex-col gap-8">
               <div>
                 <h3 className="mb-3 border-b border-gray-100 pb-1 text-lg font-semibold text-gray-800">
                   Courses Taken
                 </h3>
                 {coursesTaken.length ? (
-                  <div className="flex flex-col gap-4">
+                  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10">
                     {coursesTaken.map((course) => (
                       <CourseCard
                         key={course._id}
@@ -78,7 +80,7 @@ const UserProfile = ({ userData }) => {
                   Courses Created
                 </h3>
                 {coursesCreated.length ? (
-                  <div className="flex flex-col gap-4">
+                  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10">
                     {coursesCreated.map((course) => (
                       <CourseCard key={course._id} {...course} />
                     ))}
@@ -88,6 +90,26 @@ const UserProfile = ({ userData }) => {
                     No courses created yet.
                   </div>
                 )}
+              </div>
+            </div>
+            {/* ------------------------------------------------- */}
+            <div className="flex flex-col gap-8">
+              <div>
+                <h3 className="mb-3 border-b border-gray-100 pb-1 text-lg font-semibold text-gray-800">
+                  Courses Taken
+                </h3>
+                <UserCourses userData={userData} filterByCoursesTaken />
+              </div>
+              <div>
+                <h3 className="mb-3 border-b border-gray-100 pb-1 text-lg font-semibold text-gray-800">
+                  Courses Created
+                </h3>
+                <UserCourses
+                  userData={userData}
+                  filterByCoursesCreated
+                  hasAdminAccess={true}
+                />
+                {/* ------------------------------------------------- */}
               </div>
             </div>
           </section>

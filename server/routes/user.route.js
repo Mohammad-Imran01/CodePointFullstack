@@ -45,10 +45,11 @@ const requireAuth = passport.authenticate("jwt", { session: false }, null);
 // router.get("/public-users", requireAuth, decodeToken, getPublicUsers);
 router.get("/public-users/:id", decodeToken, getPublicUser);
 router.get("/public-users", decodeToken, getPublicUsers);
+router.get("/:id", getUser); // removed auth
 
 router.get("/moderator", requireAuth, decodeToken, getModProfile);
 router.get("/following", requireAuth, decodeToken, getFollowingUsers);
-router.get("/:id", requireAuth, getUser);
+// router.get("/:id", requireAuth, getUser);
 
 router.post(
   "/signup",

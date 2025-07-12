@@ -17,7 +17,7 @@ const OwnProfileCard = ({ user }) => {
   };
 
   return (
-    <div className="rounded-md border bg-white p-6">
+    <div className="flex-grow rounded-md border bg-white p-6 md:w-6/12">
       <div
         className="flex cursor-pointer justify-end text-xl"
         onClick={handleOpenModal}
@@ -75,20 +75,20 @@ const OwnProfileCard = ({ user }) => {
       </div>
 
       <div className="mt-4 h-20 overflow-y-auto">
-        <h3 className="font-bold text-xl mb-2">Interests</h3>
+        <h3 className="mb-2 text-xl font-bold">Interests</h3>
         {user.interests ? (
           <div className="flex flex-wrap gap-2">
             {user.interests.split(",").map((interest, i) => (
               <span
                 key={i}
-                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 {interest.trim()}
               </span>
             ))}
           </div>
         ) : (
-          <p className="text-gray-600 mt-2">
+          <p className="mt-2 text-gray-600">
             No interests have been set yet. Add some interests to let people
             know more about you.
           </p>
