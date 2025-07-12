@@ -32,6 +32,7 @@ const {
   logLimiter,
   signUpSignInLimiter,
 } = require("../middlewares/limiter/limiter");
+const validateCourseCreator = require("../utils/validateCourseCreator");
 
 router.post("/signin", signUpSignInLimiter, signin);
 
@@ -54,9 +55,9 @@ router
   .delete(logLimiter, deleteLogInfo);
 
 // Admin-only Course Routes (Already behind requireAdminAuth)
-router.post("/products/course", configLimiter, addCourse);
-router.put("/products/course/:id", configLimiter, updateCourse);
-router.delete("/products/course/:id", configLimiter, deleteCourse);
+router.post("/products/course", configLimiter, validateCourseCreator, addCourse);
+router.put("/products/course/:id", configLimiter, validateCourseCreator, updateCourse);
+router.delete("/products/course/:id", configLimiter, validateCourseCreator, deleteCourse);
 // Admin-only instructor Routes (Already behind requireAdminAuth)
 router.post("/products/instructor", configLimiter, addInstructor);
 router.put("/products/instructor/:id", configLimiter, updateInstructor);

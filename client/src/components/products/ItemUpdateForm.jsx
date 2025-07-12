@@ -14,7 +14,13 @@ const ItemUpdateForm = ({
   // 🔁 Auto-check when data changes
   useEffect(() => {
     checkFieldsAreNotEmpty();
-  }, [data]);
+  });
+
+  useEffect(() => {
+    if (courseForm && !data.level) {
+      setData({ ...data, level: "Beginner" });
+    }
+  }, [courseForm, data, setData]);
 
   function checkFieldsAreNotEmpty() {
     let isValid = true;
@@ -25,7 +31,8 @@ const ItemUpdateForm = ({
         title?.trim() &&
         description?.trim() &&
         duration?.trim() &&
-        price?.toString().trim();
+        price?.toString().trim() &&
+        level?.trim();
     }
 
     if (instructorForm) {
@@ -82,7 +89,7 @@ const ItemUpdateForm = ({
               <div>
                 <label className="mb-1 block text-sm font-medium">Level</label>
                 <select
-                  value={data.level ?? "Beginner"}
+                  value={data?.level ?? "Beginner"}
                   onChange={(e) => setData({ ...data, level: e.target.value })}
                   className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >

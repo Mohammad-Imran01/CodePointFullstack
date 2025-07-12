@@ -35,9 +35,12 @@ const avatarUpload = require("../middlewares/users/avatarUpload");
 const {
   signUpSignInLimiter,
   followLimiter,
+  configLimiter,
 } = require("../middlewares/limiter/limiter");
 
 const decodeToken = require("../middlewares/auth/decodeToken");
+const { addCourse, updateCourse, deleteCourse } = require("../controllers/course.controller");
+const validateCourseCreator = require("../utils/validateCourseCreator");
 const requireAuth = passport.authenticate("jwt", { session: false }, null);
 
 //removed sign in must checker for public profile getters
@@ -78,5 +81,9 @@ router.put("/:id", requireAuth, decodeToken, updateInfo);
 router.use(followLimiter);
 router.patch("/:id/follow", requireAuth, decodeToken, followUser);
 router.patch("/:id/unfollow", requireAuth, decodeToken, unfollowUser);
+
+router.post("/course", configLimiter , validateCourseCreator, addCourse);
+router.put("/course/:id", configLimiter, validateCourseCreator, updateCourse);
+router.delete("/course/:id", configLimiter, validateCourseCreator, deleteCourse);
 
 module.exports = router;

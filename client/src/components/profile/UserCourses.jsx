@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import {
   fetchCourses,
   addCourse,
@@ -30,7 +29,7 @@ const UserCourses = ({
   userData,
   filterByCoursesTaken,
   filterByCoursesCreated,
-  hasAdminAccess=false
+  hasAdminAccess = false,
 }) => {
   const [editing, setEditing] = useState(false);
   const [isNew, setIsNew] = useState(false);
@@ -97,10 +96,14 @@ const UserCourses = ({
 
   const saveEdit = async (ev) => {
     ev.preventDefault();
+    if (!user && !hasAdminAccess) {
+      alert("Unauthorized command");
+      return;
+    }
     try {
       isNew
-        ? await dispatch(addCourse(current))
-        : await dispatch(updateCourse(current._id, current));
+        ? await dispatch(addCourse(current, userData?._id))
+        : await dispatch(updateCourse(current._id, current, userData?._id));
       dispatch(fetchCourses());
     } catch {}
     cancelEdit();
@@ -109,7 +112,7 @@ const UserCourses = ({
   const confirmRemove = async () => {
     if (!confirmDelete) return;
     try {
-      await dispatch(deleteCourse(confirmDelete._id));
+      await dispatch(deleteCourse(confirmDelete._id, userData?._id));
       dispatch(fetchCourses());
     } catch (err) {
       console.log("Error to remove a course");

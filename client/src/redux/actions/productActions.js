@@ -60,13 +60,19 @@ export const fetchCreatedCourses = (courseIds) => async (dispatch) => {
     }
 };
 
+// ✅ Add a course (user or admin)
+export const addCourse = (courseData, m_Id, isAdmin = false) => async (dispatch) => {
+    if (!m_Id) return console.error("Missing m_Id");
 
-// ✅ Add new course (Admin API)
-export const addCourse = (courseData) => async (dispatch) => {
+    const userId = m_Id;
     dispatch({ type: Const.ADD_COURSE_REQUEST });
 
     try {
-        const response = await ADMIN_API.post("/products/course", courseData);
+        const payload = { ...courseData, userId };
+        const api = isAdmin ? ADMIN_API : API;
+        const path = isAdmin ? "/products/course" : `/users/course?userId=${userId}`;
+
+        const response = await api.post(path, payload);
         dispatch({ type: Const.ADD_COURSE_SUCCESS, payload: response.data.course });
     } catch (error) {
         const { error: message } = await handleApiError(error);
@@ -74,12 +80,21 @@ export const addCourse = (courseData) => async (dispatch) => {
     }
 };
 
-// ✅ Update a course (Admin API)
-export const updateCourse = (courseId, updatedData) => async (dispatch) => {
+// ✅ Update a course (user or admin)
+export const updateCourse = (courseId, updatedData, m_Id, isAdmin = false) => async (dispatch) => {
+    if (!m_Id) return console.error("Missing m_Id");
+
+    const userId = m_Id;
     dispatch({ type: Const.UPDATE_COURSE_REQUEST });
 
     try {
-        const response = await ADMIN_API.put(`/products/course/${courseId}`, updatedData);
+        const payload = { ...updatedData, userId };
+        const api = isAdmin ? ADMIN_API : API;
+        const path = isAdmin
+            ? `/products/course/${courseId}`
+            : `/users/course/${courseId}?userId=${userId}`;
+
+        const response = await api.put(path, payload);
         dispatch({ type: Const.UPDATE_COURSE_SUCCESS, payload: response.data.course });
     } catch (error) {
         const { error: message } = await handleApiError(error);
@@ -87,18 +102,29 @@ export const updateCourse = (courseId, updatedData) => async (dispatch) => {
     }
 };
 
-// ✅ Delete a course (Admin API)
-export const deleteCourse = (courseId) => async (dispatch) => {
+// ✅ Delete a course (user or admin)
+export const deleteCourse = (courseId, m_Id, isAdmin = false) => async (dispatch) => {
+    if (!m_Id) return console.error("Missing m_Id");
+
+    const userId = m_Id;
     dispatch({ type: Const.DELETE_COURSE_REQUEST });
 
     try {
-        await ADMIN_API.delete(`products/course/${courseId}`);
+        const api = isAdmin ? ADMIN_API : API;
+        const path = isAdmin
+            ? `/products/course/${courseId}`
+            : `/users/course/${courseId}?userId=${userId}`;
+
+        await api.delete(path);
         dispatch({ type: Const.DELETE_COURSE_SUCCESS, payload: courseId });
     } catch (error) {
         const { error: message } = await handleApiError(error);
         dispatch({ type: Const.DELETE_COURSE_FAILURE, payload: message });
     }
 };
+
+
+
 
 //***************************************************************** */
 //******************* ----- INSTRUCTOR ----- ********************** */

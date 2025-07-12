@@ -52,46 +52,6 @@ const UserProfile = ({ userData }) => {
 
           {/* Courses Section */}
           <section className="mb-10 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-            <div className="flex flex-col gap-8">
-              <div>
-                <h3 className="mb-3 border-b border-gray-100 pb-1 text-lg font-semibold text-gray-800">
-                  Courses Taken
-                </h3>
-                {coursesTaken.length ? (
-                  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10">
-                    {coursesTaken.map((course) => (
-                      <CourseCard
-                        key={course._id}
-                        {...course}
-                        isCourseTaken={user?.coursesTakenIds?.includes(
-                          course._id
-                        )}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-sm italic text-gray-400">
-                    No courses taken yet.
-                  </div>
-                )}
-              </div>
-              <div>
-                <h3 className="mb-3 border-b border-gray-100 pb-1 text-lg font-semibold text-gray-800">
-                  Courses Created
-                </h3>
-                {coursesCreated.length ? (
-                  <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10">
-                    {coursesCreated.map((course) => (
-                      <CourseCard key={course._id} {...course} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-sm italic text-gray-400">
-                    No courses created yet.
-                  </div>
-                )}
-              </div>
-            </div>
             {/* ------------------------------------------------- */}
             <div className="flex flex-col gap-8">
               <div>
@@ -107,7 +67,7 @@ const UserProfile = ({ userData }) => {
                 <UserCourses
                   userData={userData}
                   filterByCoursesCreated
-                  hasAdminAccess={true}
+                  hasAdminAccess={true}                   
                 />
                 {/* ------------------------------------------------- */}
               </div>
@@ -135,7 +95,7 @@ const UserProfile = ({ userData }) => {
                 {posts.map((post) => (
                   <MemoizedPostOnProfile key={post._id} post={post} />
                 ))}
-              </div>
+              </div>                               
             )}
           </section>
         </div>

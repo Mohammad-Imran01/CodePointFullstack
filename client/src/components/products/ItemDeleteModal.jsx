@@ -17,7 +17,7 @@ const ItemDeleteModal = ({ title, onCancel, onConfirm }) => {
     }
 
     return () => clearTimeout(timer);
-  }, [countdown]);
+  }, [countdown, onConfirm]);
 
   const startCountdown = () => {
     setCountdown(3);
