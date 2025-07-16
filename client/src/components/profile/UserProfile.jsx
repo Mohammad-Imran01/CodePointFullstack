@@ -6,13 +6,12 @@ import OwnProfileCard from "./OwnProfileCard";
 import CommonLoading from "../loader/CommonLoading";
 import OwnInfoCard from "./OwnInfoCard";
 import NoPost from "../../assets/nopost.jpg";
-import CourseCard from "../../src/components/CourseCard";
+
 import {
   fetchCreatedCourses,
   fetchTakenCourses,
 } from "../../redux/actions/productActions";
-import Courses from "../../src/sections/Courses";
-import UserCourses from "./UserCourses";
+import UserCourses from "../products/course/UserCourses";
 
 const UserProfile = ({ userData }) => {
   const coursesTaken = useSelector((state) => state.courses?.takenCourses);
@@ -64,11 +63,7 @@ const UserProfile = ({ userData }) => {
                 <h3 className="mb-3 border-b border-gray-100 pb-1 text-lg font-semibold text-gray-800">
                   Courses Created
                 </h3>
-                <UserCourses
-                  userData={userData}
-                  filterByCoursesCreated
-                  hasAdminAccess={true}                   
-                />
+                <UserCourses userData={userData} filterByCoursesCreated />
                 {/* ------------------------------------------------- */}
               </div>
             </div>
@@ -95,7 +90,7 @@ const UserProfile = ({ userData }) => {
                 {posts.map((post) => (
                   <MemoizedPostOnProfile key={post._id} post={post} />
                 ))}
-              </div>                               
+              </div>
             )}
           </section>
         </div>

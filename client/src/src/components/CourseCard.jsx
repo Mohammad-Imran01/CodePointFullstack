@@ -8,7 +8,7 @@ const CourseCard = ({
   duration,
   level,
   price,
-  hasAdminAccess,
+  isCreator,
   isEditingMode,
   courseEditHandle,
   handleDeleteCourse,
@@ -27,7 +27,7 @@ const CourseCard = ({
   return (
     <div className="dark:bg-slate-700/30 dark:text-stone-100 shadow-sm/30 relative shrink-0 grow rounded-lg border border-slate-400 bg-white/30 p-6 text-stone-800">
       <div className="">
-        {hasAdminAccess && !isEditingMode && (
+        {isCreator && !isEditingMode && (
           <EditDeleteButton
             handleDelete={handleDelete}
             handleEdit={handleEdit}
@@ -49,7 +49,7 @@ const CourseCard = ({
             <p className="dark:text-gray-50 font-bold text-slate-800">
               {price ? `₹${price}` : "Not Available"}
             </p>
-            {!hasAdminAccess && (
+            {!isCreator && (
               <button
                 className="rounded-md border-2 border-stone-800 px-2 py-1 text-stone-800 transition-all duration-200 hover:border-stone-500 hover:text-stone-700"
                 onClick={() => {

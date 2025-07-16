@@ -6,6 +6,8 @@ const postRoutes = require("./routes/post.route");
 const communityRoutes = require("./routes/community.route");
 const contextAuthRoutes = require("./routes/context-auth.route");
 
+const pool = require('./pg/config/db.js')
+
 const courseRoutes = require('./routes/product.route.js')
 
 const search = require("./controllers/search.controller");
@@ -42,6 +44,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 require("./config/passport.js");
 
+app.get('/test-pg', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()');
+    res.json({ status: 'success', time: result.rows[0] });
+  } catch (err) {
+    console.error('Error testing PostgreSQL connection', err);
+    res.status(500).json({ status: 'error', message: err.message });
+  }
+});
+
+
+
 app.get("/server-status", (req, res) => {
   res.status(200).json({ message: "Server is up and running!" });
 });
@@ -59,6 +73,7 @@ app.use("/products", courseRoutes);
 process.on("SIGINT", async () => {
   try {
     await db.disconnect();
+    pool.end()
     console.log("Disconnected from database.");
     process.exit(0);
   } catch (err) {
@@ -66,5 +81,9 @@ process.on("SIGINT", async () => {
     process.exit(1);
   }
 });
+
+
+//  testing pg connection
+
 
 app.listen(PORT, () => console.log(`Server up and running on port ${PORT}!`));

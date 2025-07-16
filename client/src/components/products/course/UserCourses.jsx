@@ -6,16 +6,15 @@ import {
   addCourse,
   updateCourse,
   deleteCourse,
-} from "../../redux/actions/productActions";
+} from "../../../redux/actions/productActions";
 import {
   getUserAction,
   updateUserAction,
-} from "../../redux/actions/userActions";
-import AuthRequiredPopup from "../shared/AuthRequiredPopup";
-import AddItemButton from "../shared/AddItemButton";
-import CourseCard from "../../src/components/CourseCard";
-import ItemUpdateForm from "../products/ItemUpdateForm";
-import ItemDeleteModal from "../products/ItemDeleteModal";
+} from "../../../redux/actions/userActions";
+import AuthRequiredPopup from "../../shared/AuthRequiredPopup";
+import CourseCard from "../../../src/components/CourseCard";
+import ItemUpdateForm from "../../products/ItemUpdateForm";
+import ItemDeleteModal from "../../products/ItemDeleteModal";
 
 const initialCourse = {
   title: "",
@@ -29,7 +28,6 @@ const UserCourses = ({
   userData,
   filterByCoursesTaken,
   filterByCoursesCreated,
-  hasAdminAccess = false,
 }) => {
   const [editing, setEditing] = useState(false);
   const [isNew, setIsNew] = useState(false);
@@ -96,7 +94,7 @@ const UserCourses = ({
 
   const saveEdit = async (ev) => {
     ev.preventDefault();
-    if (!user && !hasAdminAccess) {
+    if (!user) {
       alert("Unauthorized command");
       return;
     }
@@ -166,26 +164,8 @@ const UserCourses = ({
           }}
         />
 
-        {}
-
-        {hasAdminAccess ? (
-          <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-            {!filterByCoursesCreated && !filterByCoursesTaken && (
-              <h2 className="sectionHeadingAdmin">Manage Courses</h2>
-            )}
-            {!editing && (
-              <AddItemButton
-                wrapperClassName="whitespace-nowrap"
-                onClick={() => startEdit(initialCourse, true)}
-              />
-            )}
-          </div>
-        ) : (
-          <>
-            {!filterByCoursesCreated && !filterByCoursesTaken && (
-              <h2 className="sectionHeading mb-8">Our Courses</h2>
-            )}
-          </>
+        {!filterByCoursesCreated && !filterByCoursesTaken && (
+          <h2 className="sectionHeading mb-8">Our Courses</h2>
         )}
 
         <div className="max-h-[calc(2*12rem+2rem)] overflow-y-auto pr-2">
@@ -195,7 +175,7 @@ const UserCourses = ({
                 <CourseCard
                   key={course._id}
                   {...course}
-                  hasAdminAccess={hasAdminAccess}
+                  isCreator={filterByCoursesCreated && user}
                   isEditingMode={editing}
                   courseEditHandle={() => startEdit(course)}
                   handleDeleteCourse={() => {
@@ -226,7 +206,7 @@ const UserCourses = ({
         </div>
       </div>
 
-      {editing && hasAdminAccess && (
+      {editing && (
         <ItemUpdateForm
           isNew={isNew}
           data={current}

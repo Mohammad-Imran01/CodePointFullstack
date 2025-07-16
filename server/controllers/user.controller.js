@@ -37,6 +37,7 @@ const MESSAGE = {
 };
 
 const signin = async (req, res, next) => {
+  console.log(req.body)
   await saveLogInfo(
     req,
     "User attempting to sign in",

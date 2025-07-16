@@ -29,8 +29,6 @@ const initialCourse = {
 const Courses = ({
   hasAdminAccess,
   userData,
-  filterByCoursesTaken,
-  filterByCoursesCreated,
 }) => {
   const [editing, setEditing] = useState(false);
   const [isNew, setIsNew] = useState(false);
@@ -44,10 +42,7 @@ const Courses = ({
   const { data: allCourses } = useSelector((state) => state.courses);
 
   const user = useSelector((state) => state.user?.user);
-
-
   
-
   useEffect(() => {
     setLoading(true);
     dispatch(fetchCourses());
@@ -163,7 +158,7 @@ const Courses = ({
               <CourseCard
                 key={course._id}
                 {...course}
-                hasAdminAccess={hasAdminAccess}
+                isCreator={hasAdminAccess}
                 isEditingMode={editing}
                 courseEditHandle={() => startEdit(course)}
                 handleDeleteCourse={() => {
