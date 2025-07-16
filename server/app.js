@@ -19,6 +19,8 @@ const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
 const passport = require("passport");
+const errorHandler = require("./pg/middleware/errorHandler.js");
+const userApiRoutes = require('./pg/routes/userRoutes.js')
 
 const PORT = process.env.PORT || 4000;
 
@@ -33,6 +35,10 @@ db.connect().catch((err) =>
 
 app.use(cors());
 app.use(morgan("dev"));
+
+app.use('/api', userApiRoutes);
+app.use(errorHandler)
+
 app.use("/assets/userFiles", express.static(__dirname + "/assets/userFiles"));
 app.use(
   "/assets/userAvatars",
