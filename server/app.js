@@ -14,6 +14,8 @@ const search = require("./controllers/search.controller");
 const Database = require("./config/database");
 const decodeToken = require("./middlewares/auth/decodeToken");
 
+const createUserTable = require('./pg/data/createUserTable.js')
+
 const app = express();
 
 const cors = require("cors");
@@ -33,11 +35,12 @@ db.connect().catch((err) =>
   console.error("Error connecting to database:", err)
 );
 
+createUserTable()
+
 app.use(cors());
 app.use(morgan("dev"));
 
-app.use('/api', userApiRoutes);
-app.use(errorHandler)
+
 
 app.use("/assets/userFiles", express.static(__dirname + "/assets/userFiles"));
 app.use(
@@ -60,7 +63,8 @@ app.get('/test-pg', async (req, res) => {
   }
 });
 
-
+app.use('/api', userApiRoutes);
+app.use(errorHandler)
 
 app.get("/server-status", (req, res) => {
   res.status(200).json({ message: "Server is up and running!" });

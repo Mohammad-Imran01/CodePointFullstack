@@ -11,14 +11,14 @@ const {
 } = require('../controllers/pgUserController');
 
 // POST create a new user
-router.post('/user', createUser);
+router.post('/users', createUser);
 // GET all users
 router.get('/users', getAllUsers);
 // GET a specific user by ID
-router.get('/user/:id', getUserById);
+router.get('/users/:id', getUserById);
 // PUT update a user by ID
-router.put('/user/:id', updateUser);
+router.put('/users/:id', updateUser);
 // DELETE a user by ID
-router.delete('/user/:id', deleteUser);
+router.delete('/users/:id', deleteUser);
 
 module.exports = router;

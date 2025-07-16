@@ -12,6 +12,7 @@ const pgUserModel = {
     },
 
     async createUserService({ name, email }) {
+        console.log('abcabcabc', name, email)
         const res = await pool.query(
             'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
             [name, email]
@@ -19,7 +20,7 @@ const pgUserModel = {
         return res.rows[0];
     },
 
-    async updateUserService(id, name, email ) {
+    async updateUserService(id, name, email) {
         const res = await pool.query(
             'UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING *',
             [name, email, id]
