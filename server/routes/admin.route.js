@@ -32,6 +32,7 @@ const {
   logLimiter,
   signUpSignInLimiter,
 } = require("../middlewares/limiter/limiter");
+const { createMCQ, updateMCQ, deleteMCQ } = require("../pg/controllers/pgMCQController");
 const validateCourseCreator = require("../utils/validateCourseCreator");
 
 router.post("/signin", signUpSignInLimiter, signin);
@@ -66,5 +67,9 @@ router.delete("/products/instructor/:id", configLimiter, removeInstructor);
 router.post('/products/genericMCQs', configLimiter, createGenericMCQ)
 router.put('/products/genericMCQs/:id', configLimiter, updateGenericMCQById)
 router.delete('/products/genericMCQs/:id', configLimiter, deleteGenericMCQById)
+// Admin-only mcqs pg Routes (Already behind requireAdminAuth)
+router.post('/mcqs', createMCQ);
+router.put('/mcqs/:id', updateMCQ);
+router.delete('/mcqs/:id', deleteMCQ);
 
 module.exports = router;

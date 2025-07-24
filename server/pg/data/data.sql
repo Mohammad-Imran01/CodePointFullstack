@@ -4,3 +4,4 @@
 --         email VARCHAR(100) UNIQUE NOT NULL,
 --         created_at TIMESTAMP DEFAULT NOW()
 -- )
+

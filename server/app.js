@@ -14,7 +14,7 @@ const search = require("./controllers/search.controller");
 const Database = require("./config/database");
 const decodeToken = require("./middlewares/auth/decodeToken");
 
-const createUserTable = require('./pg/data/createUserTable.js')
+const createAllTables = require('./pg/data/createTables.js')
 
 const app = express();
 
@@ -23,9 +23,14 @@ const morgan = require("morgan");
 const passport = require("passport");
 const errorHandler = require("./pg/middleware/errorHandler.js");
 const userApiRoutes = require('./pg/routes/userRoutes.js')
+const mcqRoute = require('./pg/routes/mcqRoutes.js')
 
 const PORT = process.env.PORT || 4000;
 
+// create if any table is not created already
+createAllTables()
+
+// connect to mongo server
 const db = new Database(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -35,7 +40,6 @@ db.connect().catch((err) =>
   console.error("Error connecting to database:", err)
 );
 
-createUserTable()
 
 app.use(cors());
 app.use(morgan("dev"));
@@ -63,9 +67,6 @@ app.get('/test-pg', async (req, res) => {
   }
 });
 
-app.use('/api', userApiRoutes);
-app.use(errorHandler)
-
 app.get("/server-status", (req, res) => {
   res.status(200).json({ message: "Server is up and running!" });
 });
@@ -78,6 +79,8 @@ app.use("/posts", postRoutes);
 app.use("/communities", communityRoutes);
 app.use("/admin", adminRoutes);
 app.use("/products", courseRoutes);
+
+app.use(errorHandler)
 
 
 process.on("SIGINT", async () => {

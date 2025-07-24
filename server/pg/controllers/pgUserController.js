@@ -1,3 +1,4 @@
+const { handleResponse } = require('../../utils/generic');
 const {
     getAllUsersService,
     getUserByIdService,
@@ -6,16 +7,13 @@ const {
     deleteUserService,
 } = require('../models/pgUserModel');
 
-const handleResponse = (res, status, message, data = null) => {
-    res.status(status).json({ status, message, data });
-};
+
 
 const createUser = async (req, res, next) => {
     const { name, email } = req.body;
-    console.log('we are here', '\n\n\n\n', name, '\n\n', email, '\n\n\n\n\n\n')
     try {
         const newUser = await createUserService({ name, email });
-        handleResponse(res, 201, 'User created successfully.', newUser);
+        handleResponse (res, 201, 'User created successfully.', newUser);
     } catch (e) {
         next(e);
     }

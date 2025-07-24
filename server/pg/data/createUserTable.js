@@ -9,13 +9,13 @@ const createUserTable = async () => {
         created_at TIMESTAMP DEFAULT NOW()
     )
     `
-
     try {
-        pool.query(queryText)
+        await pool.query(queryText)
         console.log(`Table created succesfully`);
     } catch (err) {
         console.log(`Error creating succesfully`);
     }
 }
+
 
 module.exports = createUserTable
