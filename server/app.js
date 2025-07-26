@@ -16,6 +16,7 @@ const decodeToken = require("./middlewares/auth/decodeToken");
 
 const createAllTables = require('./pg/data/createTables.js')
 
+
 const app = express();
 
 const cors = require("cors");

@@ -23,11 +23,11 @@ router.get("/course/:id", getCourseById);
 //instructors
 router.get("/instructors", getInstructors);
 router.get("/instructor/:id", getInstructorById);
-//mcqs
-router.get('/genericMCQs', getAllGenericMCQs)
-router.get('/genericMCQs/:id', getGenericMCQById)
+//mcqs --- changed to use pg admin db and apis controllers and also changed the route to products/genericMCQs
+router.get('/genericMCQs', getAllMCQs)
+router.get('/genericMCQs/:id', getMCQById)
 //mcqpg
-router.get('/mcq/', getAllMCQs);
-router.get('/mcq/:id', getMCQById);
+// router.get('/mcq/', getAllMCQs);
+// router.get('/mcq/:id', getMCQById);
 
 module.exports = router;

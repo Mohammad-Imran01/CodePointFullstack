@@ -1,4 +1,13 @@
-const AddItemButton = ({
+import React from "react";
+
+interface AddItemButtonProps {
+  onClick: () => void;
+  label?: string;
+  className?: string;
+  wrapperClassName?: string;
+}
+
+const AddItemButton: React.FC<AddItemButtonProps> = ({
   onClick,
   label = "+ Add Item",
   className = "",

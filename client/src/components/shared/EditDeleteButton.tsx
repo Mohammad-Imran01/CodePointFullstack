@@ -1,7 +1,12 @@
 import { BsPencilSquare } from "react-icons/bs";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-const EditDeleteButton = ({ handleEdit, handleDelete }) => {
+interface EditDeleteButtonProps {
+  handleEdit: () => void;
+  handleDelete: () => void;
+}
+
+const EditDeleteButton = ({ handleEdit, handleDelete }: EditDeleteButtonProps) => {
   return (
     <div className="absolute bottom-0 right-0 flex -translate-x-[10%] -translate-y-[25%] items-center justify-end gap-2">
       <button

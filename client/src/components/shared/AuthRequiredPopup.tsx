@@ -1,7 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router";
 
-const AuthRequiredPopup = ({ open, onClose }) => {
+interface AuthRequiredPopupProps {      
+  open: boolean;
+  onClose: () => void;
+}
+
+const AuthRequiredPopup = ({ open, onClose }: AuthRequiredPopupProps) => {
   const navigate = useNavigate();
 
   return (

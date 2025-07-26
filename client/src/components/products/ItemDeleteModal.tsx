@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 
-const ItemDeleteModal = ({ title, onCancel, onConfirm }) => {
-  const [countdown, setCountdown] = useState(null);
-  const [canConfirm, setCanConfirm] = useState(false);
+interface ItemDeleteModalProps {
+  title: string;
+  onCancel: () => void;
+  onConfirm: () => void;
+}
+
+const ItemDeleteModal = ({ title, onCancel, onConfirm }: ItemDeleteModalProps) => {
+  const [countdown, setCountdown] = useState<any>(null);
+  const [canConfirm, setCanConfirm] = useState<boolean>(false);
 
   useEffect(() => {
-    let timer;
+    let timer: any;
     if (countdown !== null && countdown > 0) {
       timer = setTimeout(() => {
-        setCountdown((prev) => prev - 1);
+        setCountdown((prev: any) => prev - 1);
       }, 1000);
     } else if (countdown === 0) {
       setCanConfirm(true);
@@ -20,7 +26,7 @@ const ItemDeleteModal = ({ title, onCancel, onConfirm }) => {
   }, [countdown, onConfirm]);
 
   const startCountdown = () => {
-    setCountdown(3);
+    setCountdown(3 as any);
     setCanConfirm(false);
   };
 

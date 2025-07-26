@@ -1,6 +1,17 @@
 import React, { useState } from "react";
 import EditDeleteButton from "../shared/EditDeleteButton";
 
+
+interface MCQItemProps {
+  hasAdminAccess: boolean;
+  item: any;
+  qIndex: number;
+  setConfirmDelete: any;
+  startEdit: any;
+  userData: any;
+  handleUnsignedEffect: any;
+}
+
 const MCQItem = ({
   hasAdminAccess,
   item,
@@ -9,14 +20,14 @@ const MCQItem = ({
   startEdit,
   userData,
   handleUnsignedEffect,
-}) => {
+}: MCQItemProps) => {
   const [answerShown, setAnswerShown] = useState(false);
   const [hintShown, setHintShown] = useState(false);
   const [optionSelected, setOptionSelected] = useState(null);
 
-  const isCorrect = (index) =>
+  const isCorrect = (index: any) =>
     optionSelected !== null && index === item.correctOption;
-  const isWrong = (index) =>
+  const isWrong = (index: any) =>
     optionSelected === index && index !== item.correctOption;
 
   return (
@@ -31,7 +42,7 @@ const MCQItem = ({
         )}
       </div>
 
-      {item.options?.map((option, oIndex) => (
+      {item.options?.map((option: any, oIndex: any) => (
         <label
           key={oIndex}
           className={`block ${
@@ -77,7 +88,7 @@ const MCQItem = ({
 
       {/* Action Buttons */}
       <div className="mt-4 flex flex-wrap gap-3">
-        {!hasAdminAccess && (
+        {!hasAdminAccess && item?.answerDetail && (
           <button
             onClick={() => {
               if (!userData) {
@@ -96,7 +107,7 @@ const MCQItem = ({
           </button>
         )}
 
-        {!hasAdminAccess && !answerShown && (
+        {!hasAdminAccess && !answerShown && item?.hint && (
           <button
             onClick={() => {
               if (!userData) {

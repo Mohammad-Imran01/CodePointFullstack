@@ -17,6 +17,7 @@ const extractMCQFields = (obj) => {
         option4,
         option5,
         option6,
+        correctOption,
         answer,
         hint,
         id
@@ -27,8 +28,10 @@ const extractMCQFields = (obj) => {
 const createMCQ = async (req, res, next) => {
     try {
         const data = extractMCQFields(req.body);
-        const newMCQ = await createMcqService(data);
-        handleResponse(res, 201, 'MCQ created successfully.', newMCQ);
+        // const newMCQ = await createMcqService(data);
+        // handleResponse(res, 201, 'MCQ created successfully.', newMCQ);
+        console.log("data", data);
+        handleResponse(res, 201, 'MCQ created successfully.', data);
     } catch (e) {
         next(e);
     }

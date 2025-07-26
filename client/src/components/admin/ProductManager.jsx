@@ -2,7 +2,7 @@ import React from "react";
 
 import Courses from "../../src/sections/Courses";
 import Instructors from "../../src/sections/Instructors";
-import MainMCQ from "../mcq/MainMCQ";
+import MainMCQ from "../mcq/MainMCQ.tsx";
 
 const ProductManager = () => {
   return (

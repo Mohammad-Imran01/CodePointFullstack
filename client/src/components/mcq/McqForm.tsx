@@ -1,30 +1,39 @@
 import { useEffect, useState } from "react";
 
-const MCQForm = ({ isNew, data, setData, onCancel, onSave }) => {
+
+interface MCQFormProps {
+  isNew: boolean;
+  data: any;
+  setData: any;
+  onCancel: any;
+  onSave: any;
+}
+
+const MCQForm = ({ isNew, data, setData, onCancel, onSave }: MCQFormProps) => {
   const [allowSave, setAllowSave] = useState(false);
 
 
 
-  useEffect(() => {
+  useEffect(() => { 
     const valid =
       data.ques.trim() &&
-      data.options.every((opt) => opt.trim()) &&
+      data.options.every((opt: any) => opt.trim()) &&
       data.correctOption >= 0 &&
       data.correctOption < data.options.length;
     setAllowSave(valid);
   }, [data]);
 
-  const handleChange = (field, value) => {
+  const handleChange = (field: any, value: any) => {
     setData({ ...data, [field]: value });
   };
 
-  const handleOptionChange = (index, value) => {
+  const handleOptionChange = (index: any, value: any) => {
     const updated = [...data.options];
     updated[index] = value;
     setData({ ...data, options: updated });
   };
 
-  const handleCorrectSelect = (index) => {
+  const handleCorrectSelect = (index: any) => {
     setData({ ...data, correctOption: index });
   };
 
@@ -32,15 +41,15 @@ const MCQForm = ({ isNew, data, setData, onCancel, onSave }) => {
     setData({ ...data, options: [...data.options, ""] });
   };
 
-  const removeOption = (index) => {
-    const updated = data.options.filter((_, i) => i !== index);
+  const removeOption = (index: any) => {
+    const updated = data.options.filter((_: any, i: any) => i !== index);
     let correctOption = data.correctOption;
     if (correctOption === index) correctOption = -1;
     else if (index < correctOption) correctOption -= 1;
     setData({ ...data, options: updated, correctOption });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     if (allowSave) onSave(e);
   };
@@ -61,7 +70,7 @@ const MCQForm = ({ isNew, data, setData, onCancel, onSave }) => {
           />
 
           <div className="space-y-2">
-            {data.options.map((opt, i) => (
+            {data.options.map((opt: any, i: any) => (
               <div key={i} className="flex items-center gap-2">
                 <input
                   type="radio"

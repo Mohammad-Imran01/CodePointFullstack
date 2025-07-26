@@ -63,13 +63,15 @@ router.delete("/products/course/:id", configLimiter, validateCourseCreator, dele
 router.post("/products/instructor", configLimiter, addInstructor);
 router.put("/products/instructor/:id", configLimiter, updateInstructor);
 router.delete("/products/instructor/:id", configLimiter, removeInstructor);
+
+
+// changed backend to use pg mcqs instead of mongo mcqs, apis and controllers are changed accordingly
 // Admin-only mcqs Routes (Already behind requireAdminAuth)
-router.post('/products/genericMCQs', configLimiter, createGenericMCQ)
-router.put('/products/genericMCQs/:id', configLimiter, updateGenericMCQById)
-router.delete('/products/genericMCQs/:id', configLimiter, deleteGenericMCQById)
-// Admin-only mcqs pg Routes (Already behind requireAdminAuth)
-router.post('/mcqs', createMCQ);
-router.put('/mcqs/:id', updateMCQ);
-router.delete('/mcqs/:id', deleteMCQ);
+// router.post('/products/genericMCQs', configLimiter, createGenericMCQ)
+// router.put('/products/genericMCQs/:id', configLimiter, updateGenericMCQById)
+// router.delete('/products/genericMCQs/:id', configLimiter, deleteGenericMCQById)
+router.post('/products/genericMCQs', configLimiter, createMCQ)
+router.put('/products/genericMCQs/:id', configLimiter, updateMCQ)
+router.delete('/products/genericMCQs/:id', configLimiter, deleteMCQ)
 
 module.exports = router;

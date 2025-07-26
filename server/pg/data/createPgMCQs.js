@@ -1,5 +1,20 @@
 const pool = require("../config/db");
 
+const addCorrectOptionColumn = async () => {
+    const queryText = `
+        ALTER TABLE mcqTable
+        ADD COLUMN IF NOT EXISTS correctOption INT NOT NULL DEFAULT -1;
+    `;
+
+    try {
+        await pool.query(queryText);
+        console.log('✅ Successfully added correctOption column');
+    } catch (err) {
+        console.error('❌ Failed to add correctOption column:', err.message || err);
+    }
+};
+
+
 const createMCQTable = async () => {
     const queryText = `
         CREATE TABLE IF NOT EXISTS mcqTable (
@@ -12,6 +27,7 @@ const createMCQTable = async () => {
             option4 VARCHAR(200) NOT NULL, 
             option5 VARCHAR(200), 
             option6 VARCHAR(200),
+            correctOption INT NOT NULL DEFAULT -1,
             answer VARCHAR(500) NOT NULL,
             hint VARCHAR(500)
         );
@@ -25,4 +41,4 @@ const createMCQTable = async () => {
     }
 };
 
-module.exports = createMCQTable;
+module.exports = { createMCQTable, addCorrectOptionColumn };

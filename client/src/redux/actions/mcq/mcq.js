@@ -10,7 +10,6 @@ export const getMCQsAction = () => async (dispatch) => {
     try {
         const { error, data } = await mcqAPI.getAllMCQs();
         if (error) throw new Error(error);
-
         dispatch({ type: CONST.FETCH_MCQs_SUCCESS, payload: data });
     } catch (err) {
         dispatch({ type: CONST.FETCH_MCQs_FAILURE, payload: err.message });
